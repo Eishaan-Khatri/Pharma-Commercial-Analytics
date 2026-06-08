@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+
+# Keep generated sample outputs public-friendly, but never commit private raw data.
+data/raw/
+*.xlsx
+*.xls
+

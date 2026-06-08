@@ -1,0 +1,10 @@
+check,value
+raw_rows,25000
+rows_after_deduplication,25000
+rows_removed_invalid_or_missing,0
+clean_rows,25000
+date_min,2024-01-01
+date_max,2025-12-31
+drug_categories,57
+regions,5
+channels,5

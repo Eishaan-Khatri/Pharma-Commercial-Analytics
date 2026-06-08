@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pharma Commercial Analytics | Eishaan Khatri</title>
+    <meta
+      name="description"
+      content="My rebuilt pharma commercial analytics project with SQL summaries, forecasting, segmentation, campaign comparison, and dashboard output."
+    />
+    <link rel="stylesheet" href="assets/site.css?v=20260524" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <div class="topbar__inner">
+          <a class="brand" href="#brief" aria-label="Pharma Commercial Analytics home">
+            <span class="brand__mark">P</span>
+            <span>
+              <span class="brand__eyebrow">Analytics rebuild</span>
+              <span class="brand__title">Pharma Commercial Analytics</span>
+            </span>
+          </a>
+
+          <nav class="nav" aria-label="Page navigation">
+            <a href="#brief" data-nav>Brief</a>
+            <a href="#build" data-nav>Build</a>
+            <a href="#output" data-nav>Output</a>
+            <a href="#tools" data-nav>Tools</a>
+            <a href="#limits" data-nav>Limits</a>
+            <a href="#files" data-nav>Files</a>
+          </nav>
+
+          <div class="actions">
+            <a class="button" href="reports/final_report.md">Report</a>
+            <a class="button button--primary" href="https://github.com/Eishaan-Khatri/Pharma-Commercial-Analytics">GitHub</a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="brief" id="brief" data-section>
+          <canvas id="pharmaScene" class="pharma-scene" aria-label="3D pharma analytics scene"></canvas>
+          <div class="brief__shade"></div>
+          <div class="brief__inner">
+            <div class="brief__copy">
+              <div class="label-row">
+                <span>Rebuilt repo</span>
+                <span>25,000 sample rows</span>
+                <span>57 categories</span>
+                <span>Generated public data</span>
+              </div>
+
+              <p class="kicker">Project brief</p>
+              <h1>Pharma analytics you can check.</h1>
+              <p class="deck">
+                I cleaned transaction-style data, wrote sales summaries, built simple forecasts,
+                grouped categories, compared campaign rows, and turned the results into files,
+                charts, and a dashboard.
+              </p>
+
+              <div class="scope-box">
+                <b>What changed</b>
+                <p>
+                  My old project note mentioned 600K+ transactions across 57 drug categories. I do
+                  not have the raw files here now, so I rebuilt a public version with generated
+                  sample data. I keep each claim tied to a file in this repo.
+                </p>
+              </div>
+
+              <div class="evidence-strip" aria-label="What this project proves">
+                <div>
+                  <b>Data work</b>
+                  <span>cleaning, checks, exports</span>
+                </div>
+                <div>
+                  <b>Modelling</b>
+                  <span>forecasting, segments, intervals</span>
+                </div>
+                <div>
+                  <b>Business output</b>
+                  <span>dashboard, tables, written notes</span>
+                </div>
+              </div>
+
+              <div class="brief__actions">
+                <a class="button button--primary" href="dashboards/screenshots/executive_dashboard.svg">Open dashboard</a>
+                <a class="button" href="docs/LEARNING_GUIDE.md">Read learning guide</a>
+                <button class="button" type="button" data-copy="python -m src.run_pipeline --rows 25000 --force">
+                  Copy run command
+                </button>
+              </div>
+            </div>
+
+            <aside class="ledger" aria-label="Project ledger">
+              <p class="ledger__title">Run ledger</p>
+              <dl>
+                <div>
+                  <dt>Data</dt>
+                  <dd>Generated sample</dd>
+                </div>
+                <div>
+                  <dt>Rows</dt>
+                  <dd>25,000</dd>
+                </div>
+                <div>
+                  <dt>Categories</dt>
+                  <dd>57</dd>
+                </div>
+                <div>
+                  <dt>Best model</dt>
+                  <dd>Ridge regression</dd>
+                </div>
+                <div>
+                  <dt>Best RMSE</dt>
+                  <dd>8,538.73</dd>
+                </div>
+                <div>
+                  <dt>A/B claim</dt>
+                  <dd>Comparison only</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="page-inner">
+            <div class="dashboard-frame">
+              <div class="dashboard-frame__header">
+                <div>
+                  <p class="kicker">Dashboard output</p>
+                  <h2>Executive view generated from the pipeline</h2>
+                </div>
+                <span>SVG / GitHub-ready</span>
+              </div>
+              <img src="dashboards/screenshots/executive_dashboard.svg" alt="Executive dashboard showing sales trend, top categories, forecast error, and campaign comparison" />
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="build" data-section>
+          <div class="page-inner">
+            <div class="section-heading">
+              <p class="kicker">Build</p>
+              <h2>I made the project easy to inspect.</h2>
+              <p>
+                I did not want a repo with one vague notebook. I split the work into data, SQL,
+                code, reports, charts, and notes.
+              </p>
+            </div>
+
+            <div class="build-grid">
+              <article class="build-card accent-teal">
+                <span>01</span>
+                <h3>Generate data</h3>
+                <p>I create rows with category, region, channel, price, discount, and campaign fields.</p>
+              </article>
+              <article class="build-card accent-copper">
+                <span>02</span>
+                <h3>Clean rows</h3>
+                <p>I check dates, duplicate rows, bad quantities, missing fields, and sales metrics.</p>
+              </article>
+              <article class="build-card accent-green">
+                <span>03</span>
+                <h3>Summarize sales</h3>
+                <p>I make category, region, channel, month, campaign, and customer summaries.</p>
+              </article>
+              <article class="build-card accent-red">
+                <span>04</span>
+                <h3>Model carefully</h3>
+                <p>I use lagged values for forecasts, K-means for groups, and bootstrap ranges for comparison.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--paper" id="output" data-section>
+          <div class="page-inner">
+            <div class="section-heading">
+              <p class="kicker">Output</p>
+              <h2>The page shows the actual files, not just claims.</h2>
+              <p>
+                These charts and tables come from the run. I added them so the work is fast to judge.
+              </p>
+            </div>
+
+            <div class="output-grid">
+              <div class="chart-wall">
+                <a class="chart-tile large" href="outputs/figures/monthly_revenue_trend.svg">
+                  <span>Monthly net sales</span>
+                  <img src="outputs/figures/monthly_revenue_trend.svg" alt="Monthly net sales trend" />
+                </a>
+                <a class="chart-tile" href="outputs/figures/top_categories.svg">
+                  <span>Top categories</span>
+                  <img src="outputs/figures/top_categories.svg" alt="Top drug categories by net sales" />
+                </a>
+                <a class="chart-tile" href="outputs/figures/forecast_vs_actual.svg">
+                  <span>Forecast vs actual</span>
+                  <img src="outputs/figures/forecast_vs_actual.svg" alt="Forecast versus actual net sales" />
+                </a>
+                <a class="chart-tile" href="outputs/figures/segment_profiles.svg">
+                  <span>Segments</span>
+                  <img src="outputs/figures/segment_profiles.svg" alt="Average revenue by segment" />
+                </a>
+              </div>
+
+              <aside class="model-table">
+                <div class="table-title">
+                  <p class="kicker">Forecast check</p>
+                  <h3>Model comparison</h3>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th>MAE</th>
+                        <th>RMSE</th>
+                        <th>sMAPE</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><b>Ridge regression</b></td>
+                        <td>4,667.00</td>
+                        <td>8,538.73</td>
+                        <td>45.81%</td>
+                      </tr>
+                      <tr>
+                        <td>Moving average 3</td>
+                        <td>4,658.94</td>
+                        <td>8,779.68</td>
+                        <td>28.83%</td>
+                      </tr>
+                      <tr>
+                        <td>Linear regression</td>
+                        <td>4,913.92</td>
+                        <td>8,918.98</td>
+                        <td>48.96%</td>
+                      </tr>
+                      <tr>
+                        <td>Naive last period</td>
+                        <td>5,931.17</td>
+                        <td>11,733.02</td>
+                        <td>33.78%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="table-note">
+                  I use a time holdout. I do not use a random split for this forecast check.
+                </p>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="tools" data-section>
+          <div class="page-inner tools-layout">
+            <div>
+              <p class="kicker">Tools</p>
+              <h2>I used simple tools because this is a business analytics project.</h2>
+              <p>
+                The point is not to show a complex model. The point is to show a clean path from
+                rows to numbers to a readable dashboard.
+              </p>
+            </div>
+
+            <div class="tool-list">
+              <div class="tool-row">
+                <b>SQL</b>
+                <span>I use it because sales data usually sits in tables.</span>
+              </div>
+              <div class="tool-row">
+                <b>pandas</b>
+                <span>I use it to clean rows, group data, make new fields, and export tables.</span>
+              </div>
+              <div class="tool-row">
+                <b>Ridge regression</b>
+                <span>I use it as a simple forecast model that handles related features better than plain linear regression.</span>
+              </div>
+              <div class="tool-row">
+                <b>K-means</b>
+                <span>I use it to group categories into simple business segments.</span>
+              </div>
+              <div class="tool-row">
+                <b>Bootstrap CI</b>
+                <span>I use it to compare campaign rows without pretending it proves cause and effect.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="limits" id="limits" data-section>
+          <div class="page-inner limits__inner">
+            <div>
+              <p class="kicker">Limits</p>
+              <h2>I say what this is and what it is not.</h2>
+              <p>
+                This is commercial analytics with generated public data. I make no clinical claims,
+                no production claims, and no fake causal claim.
+              </p>
+            </div>
+
+            <div class="limit-grid">
+              <article>
+                <b>Data</b>
+                <span>I use generated public data so the repo can be run and checked safely.</span>
+              </article>
+              <article>
+                <b>Campaign comparison</b>
+                <span>I treat campaign analysis as comparison-only unless randomization is documented.</span>
+              </article>
+              <article>
+                <b>Domain</b>
+                <span>I make no patient, drug efficacy, safety, or clinical recommendation claims.</span>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="files" data-section>
+          <div class="page-inner">
+            <div class="section-heading">
+              <p class="kicker">Files</p>
+              <h2>The important parts are one click away.</h2>
+              <p>
+                I want the repo to be easy to check. The code, reports, charts, and notes are linked
+                from here.
+              </p>
+            </div>
+
+            <div class="file-grid">
+              <a class="file-card accent-teal" href="src/run_pipeline.py">
+                <b>Pipeline</b>
+                <span>Regenerates data, tables, charts, dashboard, and reports.</span>
+              </a>
+              <a class="file-card accent-copper" href="reports/final_report.md">
+                <b>Final report</b>
+                <span>Short written summary of the full run.</span>
+              </a>
+              <a class="file-card accent-green" href="docs/INTERVIEW_GUIDE.md">
+                <b>Interview notes</b>
+                <span>Short answer, longer answer, and limitation answers.</span>
+              </a>
+              <a class="file-card accent-red" href="outputs/tables/forecast_model_metrics.csv">
+                <b>Metrics CSV</b>
+                <span>Forecast model comparison.</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="page-inner">
+          <p>I rebuilt Pharma Commercial Analytics from the old project notes, with clear files and honest limits.</p>
+          <a class="button" href="#brief">Back to top</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>

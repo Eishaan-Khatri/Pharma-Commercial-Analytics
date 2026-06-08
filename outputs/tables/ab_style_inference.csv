@@ -1,0 +1,2 @@
+metric,observed_difference,bootstrap_ci_95_low,bootstrap_ci_95_high,interpretation
+avg_net_sales_difference_campaign_minus_non_campaign,25.578258970883326,-20.209014731989857,71.58175620722633,Comparison only; not causal without randomized assignment.
