@@ -109,15 +109,15 @@
                 </div>
                 <div>
                   <dt>Best model</dt>
-                  <dd>Ridge regression</dd>
+                  <dd>Linear regression</dd>
                 </div>
                 <div>
                   <dt>Best RMSE</dt>
-                  <dd>8,538.73</dd>
+                  <dd>14,687.75</dd>
                 </div>
                 <div>
-                  <dt>A/B claim</dt>
-                  <dd>Comparison only</dd>
+                  <dt>vs naive</dt>
+                  <dd>20.06% lower RMSE</dd>
                 </div>
               </dl>
             </aside>
@@ -135,6 +135,13 @@
                 <span>SVG / GitHub-ready</span>
               </div>
               <img src="dashboards/screenshots/executive_dashboard.svg" alt="Executive dashboard showing sales trend, top categories, forecast error, and campaign comparison" />
+              <div class="dashboard-links" aria-label="Dashboard view links">
+                <a href="dashboards/screenshots/executive_summary.svg">Executive summary</a>
+                <a href="dashboards/screenshots/category_view.svg">Category view</a>
+                <a href="dashboards/screenshots/forecast_view.svg">Forecast view</a>
+                <a href="dashboards/screenshots/segment_view.svg">Segment view</a>
+                <a href="dashboards/screenshots/campaign_comparison_view.svg">Campaign comparison</a>
+              </div>
             </div>
           </div>
         </section>
@@ -222,34 +229,46 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td><b>Ridge regression</b></td>
-                        <td>4,667.00</td>
-                        <td>8,538.73</td>
-                        <td>45.81%</td>
+                        <td><b>Linear regression</b></td>
+                        <td>9,677.58</td>
+                        <td>14,687.75</td>
+                        <td>36.54%</td>
+                      </tr>
+                      <tr>
+                        <td>Ridge regression</td>
+                        <td>9,477.41</td>
+                        <td>14,769.91</td>
+                        <td>33.97%</td>
+                      </tr>
+                      <tr>
+                        <td>Ridge + LightGBM residual</td>
+                        <td>9,322.43</td>
+                        <td>15,435.27</td>
+                        <td>32.76%</td>
                       </tr>
                       <tr>
                         <td>Moving average 3</td>
-                        <td>4,658.94</td>
-                        <td>8,779.68</td>
-                        <td>28.83%</td>
+                        <td>9,841.95</td>
+                        <td>16,515.99</td>
+                        <td>26.69%</td>
                       </tr>
                       <tr>
-                        <td>Linear regression</td>
-                        <td>4,913.92</td>
-                        <td>8,918.98</td>
-                        <td>48.96%</td>
+                        <td>LightGBM</td>
+                        <td>9,669.41</td>
+                        <td>17,641.94</td>
+                        <td>30.53%</td>
                       </tr>
                       <tr>
                         <td>Naive last period</td>
-                        <td>5,931.17</td>
-                        <td>11,733.02</td>
-                        <td>33.78%</td>
+                        <td>10,798.33</td>
+                        <td>18,373.13</td>
+                        <td>32.19%</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <p class="table-note">
-                  I use a time holdout. I do not use a random split for this forecast check.
+                  I use a chronological train/validation/test split. LightGBM is evaluated, but I do not claim it wins when the final-test CSV says otherwise.
                 </p>
               </aside>
             </div>
@@ -281,8 +300,12 @@
                 <span>I use it as a simple forecast model that handles related features better than plain linear regression.</span>
               </div>
               <div class="tool-row">
+                <b>LightGBM</b>
+                <span>I added it as the stronger tree-based baseline, then kept the final claim honest because it did not beat the simpler models on this test block.</span>
+              </div>
+              <div class="tool-row">
                 <b>K-means</b>
-                <span>I use it to group categories into simple business segments.</span>
+                <span>I use it to group categories into high-value growing, stable core, campaign-responsive, and low-volume niche segments.</span>
               </div>
               <div class="tool-row">
                 <b>Bootstrap CI</b>

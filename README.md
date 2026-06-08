@@ -8,7 +8,7 @@ Business-facing analytics project for pharma transaction-style data. The workflo
 
 - Transaction-level data cleaning and validation.
 - SQL-style commercial KPI analysis.
-- Forecasting with naive, moving-average, linear regression, and ridge regression baselines.
+- Forecasting with naive, moving-average, linear regression, ridge regression, LightGBM, and ridge-plus-LightGBM residual baselines.
 - Category segmentation using K-means clustering.
 - A/B-style campaign comparison with clear non-causal limitations.
 - Dashboard-style screenshots for business stakeholders.
@@ -30,7 +30,7 @@ Pharma-Commercial-Analytics/
   index.html             GitHub Pages project website
   assets/                Website CSS and JS
   data/                  Sample data notes and generated CSVs
-  dashboards/            Generated dashboard-style screenshots
+  dashboards/            Generated dashboard-style screenshots and dashboard views
   docs/                  Data dictionary, methodology, limitations, learning guide
   notebooks/             Lightweight notebook entry points
   outputs/               Generated tables and figures
@@ -59,10 +59,17 @@ The run creates:
 - `data/sample/pharma_transactions_sample.csv`
 - `data/sample/pharma_transactions_clean.csv`
 - `outputs/tables/forecast_model_metrics.csv`
+- `outputs/tables/forecast_split_summary.csv`
 - `outputs/tables/category_segments.csv`
 - `outputs/tables/ab_style_inference.csv`
+- `outputs/metrics/*.csv`
 - `outputs/figures/*.svg`
 - `dashboards/screenshots/executive_dashboard.svg`
+- `dashboards/screenshots/executive_summary.svg`
+- `dashboards/screenshots/category_view.svg`
+- `dashboards/screenshots/forecast_view.svg`
+- `dashboards/screenshots/segment_view.svg`
+- `dashboards/screenshots/campaign_comparison_view.svg`
 - `reports/final_report.md`
 
 ## Main Methods
@@ -71,10 +78,10 @@ The run creates:
 |---|---|---|
 | Data cleaning | pandas validation and derived features | Flexible and readable for tabular data |
 | KPI analysis | SQL + pandas aggregations | Mirrors business analytics workflows |
-| Forecasting | naive, moving average, linear regression, ridge regression | Interpretable baselines with leakage-aware time split |
+| Forecasting | naive, moving average, linear regression, ridge regression, LightGBM, ridge + LightGBM residual | Interpretable and nonlinear baselines with leakage-aware chronological splits |
 | Segmentation | K-means clustering | Simple, explainable grouping for commercial categories |
 | A/B-style analysis | group comparison + bootstrap CI | Quantifies differences without pretending causal proof |
-| Dashboarding | dependency-light SVG dashboard figures | Makes outputs visible in a public repo |
+| Dashboarding | dependency-light SVG dashboard figures and dashboard views | Makes outputs visible in a public repo |
 
 Note: the current rebuilt version generates SVG dashboard-style figures directly from Python, so the project does not require heavy plotting dependencies.
 
@@ -94,9 +101,15 @@ Summary:
 | Drug categories | 57 |
 | Regions | 5 |
 | Channels | 5 |
+| Monthly category rows | 1,354 |
 | Date range | 2024-01-01 to 2025-12-31 |
-| Best forecast model in sample run | Ridge regression |
-| Best RMSE in sample run | 8,538.73 |
+| Forecast split | Train older months, validate next block, test final months |
+| Best forecast model in sample run | Linear regression |
+| Naive RMSE in sample run | 18,373.13 |
+| Best RMSE in sample run | 14,687.75 |
+| Best improvement over naive | 20.06% |
+| Business-selected K-means clusters | 4 |
+| K-means silhouette for 4 clusters | 0.4036 |
 
 Key generated files:
 
@@ -105,6 +118,7 @@ Key generated files:
 - `reports/segment_profiles.md`
 - `reports/ab_style_analysis.md`
 - `outputs/tables/forecast_model_metrics.csv`
+- `outputs/metrics/run_summary.csv`
 - `outputs/tables/segment_profiles.csv`
 - `dashboards/screenshots/executive_dashboard.svg`
 
@@ -119,7 +133,7 @@ For step-by-step explanation of what is used, why it is used, and what alternati
 
 ## Safe CV Summary
 
-Built a pharma commercial analytics workflow over transaction-style sales data, covering data cleaning, forecasting, segmentation, A/B-style comparison, and dashboard reporting using Python, SQL, regression, K-means clustering, and Tableau/Power BI-style outputs.
+Built a pharma commercial analytics workflow over 25,000 transaction-style rows across 57 categories, covering data cleaning, KPI analysis, leakage-aware forecasting, K-means segmentation, A/B-style campaign comparison, and dashboard reporting using Python, SQL, regression, LightGBM, and business-facing SVG/BI-style outputs.
 
 ## Important Limitations
 

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="660" viewBox="0 0 1140 660">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="24" y="34" font-family="Arial" font-size="20" font-weight="700" fill="#111827">Executive Summary View</text>
+  
+    <rect x="30" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="48" y="91" font-family="Arial" font-size="12" fill="#6B7280">Rows</text>
+    <text x="48" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">25,000</text>
+    <rect x="305" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="323" y="91" font-family="Arial" font-size="12" fill="#6B7280">Net sales</text>
+    <text x="323" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">58.2M</text>
+    <rect x="580" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="598" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best forecast</text>
+    <text x="598" y="125" font-family="Arial" font-size="23" font-weight="700" fill="#111827">Linear Regression</text>
+    <rect x="855" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="873" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best RMSE</text>
+    <text x="873" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">14,687.75</text>
+    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">Executive summary</text>
+    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard is generated from synthetic public data and proves the analytics workflow, not real pharma revenue impact.</text>
+    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans transactions, builds monthly category features, forecasts demand, segments categories, and compares campaign rows cautiously.</text>
+    <text x="40" y="330" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment labels</text>
+    
+        <rect x="42" y="346" width="16" height="16" fill="#B45309" rx="3"/>
+        <text x="70" y="359" font-family="Arial" font-size="13" fill="#374151">High-value growing: 14 categories, avg sales 2.8M</text>
+        
+        <rect x="42" y="376" width="16" height="16" fill="#1D4ED8" rx="3"/>
+        <text x="70" y="389" font-family="Arial" font-size="13" fill="#374151">Stable core: 26 categories, avg sales 513.6K</text>
+        
+        <rect x="42" y="406" width="16" height="16" fill="#047857" rx="3"/>
+        <text x="70" y="419" font-family="Arial" font-size="13" fill="#374151">Campaign-responsive: 11 categories, avg sales 469.6K</text>
+        
+        <rect x="42" y="436" width="16" height="16" fill="#7C3AED" rx="3"/>
+        <text x="70" y="449" font-family="Arial" font-size="13" fill="#374151">Low-volume niche: 6 categories, avg sales 19.5K</text>
+        
+    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison boundary</text>
+    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: -166.92; 95% bootstrap CI [-227.41, -109.70]. Comparison only, not causal.</text>
+    
+</svg>

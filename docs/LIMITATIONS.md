@@ -10,7 +10,14 @@ Unless treatment and control groups are randomized, campaign comparisons cannot 
 
 ## 3. Forecasting Is Kept Interpretable
 
-Linear and ridge regression are useful baselines, but they may miss nonlinear patterns. Stronger models such as LightGBM or SARIMA can be added later.
+The current public rebuild includes naive, moving-average, linear regression,
+ridge regression, LightGBM, and ridge-plus-LightGBM residual baselines. Linear
+regression wins on final-test RMSE in the checked-in sample run. That should be
+reported honestly; do not claim LightGBM is best unless a future run actually
+shows that in `outputs/metrics/forecast_model_metrics.csv`.
+
+SARIMA/Prophet-style models can still be added later if the goal is a more
+classical time-series comparison.
 
 ## 4. Segmentation Requires Business Validation
 
@@ -19,4 +26,3 @@ K-means produces mathematical clusters. A business team must validate whether th
 ## 5. No Clinical Claims
 
 The project is commercial analytics. It does not analyze patients, outcomes, drug safety, or clinical recommendations.
-

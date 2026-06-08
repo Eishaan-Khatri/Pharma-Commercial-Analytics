@@ -94,15 +94,23 @@ def plot_top_categories(df: pd.DataFrame, path) -> None:
     _write_svg(Path(path), 900, 430, body, "Top Drug Categories By Net Sales")
 
 
+def _best_prediction_column(predictions: pd.DataFrame) -> str:
+    for column in ["ridge_lightgbm_residual", "lightgbm", "ridge_regression", "linear_regression", "moving_average_3"]:
+        if column in predictions.columns:
+            return column
+    return "naive_last_period"
+
+
 def plot_forecast(predictions: pd.DataFrame, path) -> None:
+    best_col = _best_prediction_column(predictions)
     sample = predictions.groupby("month", as_index=False).agg(
         actual_sales=("actual_sales", "sum"),
-        ridge_regression=("ridge_regression", "sum"),
+        best_forecast=(best_col, "sum"),
         moving_average_3=("moving_average_3", "sum"),
     )
     body = ""
     body += _line_chart(list(zip(sample["month"], sample["actual_sales"])), 60, 75, 760, 230, COLORS[0], "Actual")
-    body += _line_chart(list(zip(sample["month"], sample["ridge_regression"])), 60, 75, 760, 230, COLORS[2], "Ridge")
+    body += _line_chart(list(zip(sample["month"], sample["best_forecast"])), 60, 75, 760, 230, COLORS[2], best_col.replace("_", " ").title())
     body += _line_chart(list(zip(sample["month"], sample["moving_average_3"])), 60, 75, 760, 230, COLORS[1], "Moving average")
     _write_svg(Path(path), 900, 370, body, "Forecast vs Actual Net Sales")
 
@@ -188,3 +196,107 @@ def create_dashboard_collage(df, metrics, profiles, ab_summary, dashboard_path) 
     {campaign_bars}
     """
     _write_svg(Path(dashboard_path), 1120, 760, body, "Pharma Commercial Analytics - Executive Dashboard")
+
+
+def create_dashboard_views(df, forecast_metrics, forecast_predictions, profiles, ab_summary, ab_inference, dashboard_dir) -> None:
+    dashboard_dir = Path(dashboard_dir)
+    _create_executive_summary_view(df, forecast_metrics, profiles, ab_inference, dashboard_dir / "executive_summary.svg")
+    _create_category_view(df, profiles, dashboard_dir / "category_view.svg")
+    _create_forecast_view(forecast_metrics, forecast_predictions, dashboard_dir / "forecast_view.svg")
+    _create_segment_view(profiles, dashboard_dir / "segment_view.svg")
+    _create_campaign_view(ab_summary, ab_inference, dashboard_dir / "campaign_comparison_view.svg")
+
+
+def _create_executive_summary_view(df, metrics, profiles, ab_inference, path) -> None:
+    best = metrics.iloc[0]
+    total_sales = df["net_sales"].sum()
+    body = f"""
+    <rect x="30" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="48" y="91" font-family="Arial" font-size="12" fill="#6B7280">Rows</text>
+    <text x="48" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">{len(df):,}</text>
+    <rect x="305" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="323" y="91" font-family="Arial" font-size="12" fill="#6B7280">Net sales</text>
+    <text x="323" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">{_fmt(total_sales)}</text>
+    <rect x="580" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="598" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best forecast</text>
+    <text x="598" y="125" font-family="Arial" font-size="23" font-weight="700" fill="#111827">{html.escape(str(best['model']).replace('_', ' ').title())}</text>
+    <rect x="855" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+    <text x="873" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best RMSE</text>
+    <text x="873" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">{best['RMSE']:,.2f}</text>
+    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">Executive summary</text>
+    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard is generated from synthetic public data and proves the analytics workflow, not real pharma revenue impact.</text>
+    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans transactions, builds monthly category features, forecasts demand, segments categories, and compares campaign rows cautiously.</text>
+    <text x="40" y="330" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment labels</text>
+    """
+    y = 366
+    for _, row in profiles.iterrows():
+        body += f"""
+        <rect x="42" y="{y - 20}" width="16" height="16" fill="{COLORS[int(row['cluster']) % len(COLORS)]}" rx="3"/>
+        <text x="70" y="{y - 7}" font-family="Arial" font-size="13" fill="#374151">{html.escape(row['segment_label'])}: {int(row['categories'])} categories, avg sales {_fmt(float(row['total_net_sales']))}</text>
+        """
+        y += 30
+    ci = ab_inference.iloc[0]
+    body += f"""
+    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison boundary</text>
+    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: {ci['observed_difference']:.2f}; 95% bootstrap CI [{ci['bootstrap_ci_95_low']:.2f}, {ci['bootstrap_ci_95_high']:.2f}]. Comparison only, not causal.</text>
+    """
+    _write_svg(Path(path), 1140, 660, body, "Executive Summary View")
+
+
+def _create_category_view(df, profiles, path) -> None:
+    top = (
+        df.groupby("drug_category", as_index=False)
+        .agg(net_sales=("net_sales", "sum"))
+        .sort_values("net_sales", ascending=False)
+        .head(12)
+    )
+    body = _bar_chart(top["drug_category"].tolist(), top["net_sales"].tolist(), 32, 74, 520, 330, COLORS[1])
+    body += '<text x="640" y="78" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Business segments</text>'
+    y = 116
+    for _, row in profiles.iterrows():
+        body += f"""
+        <rect x="640" y="{y - 22}" width="380" height="54" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
+        <text x="658" y="{y}" font-family="Arial" font-size="14" font-weight="700" fill="#111827">{html.escape(row['segment_label'])}</text>
+        <text x="658" y="{y + 22}" font-family="Arial" font-size="12" fill="#6B7280">{int(row['categories'])} categories | avg sales {_fmt(float(row['total_net_sales']))} | growth {float(row['growth_rate']):.2%}</text>
+        """
+        y += 72
+    _write_svg(Path(path), 1100, 470, body, "Category View")
+
+
+def _create_forecast_view(metrics, predictions, path) -> None:
+    best_col = _best_prediction_column(predictions)
+    sample = predictions.groupby("month", as_index=False).agg(
+        actual_sales=("actual_sales", "sum"),
+        best_forecast=(best_col, "sum"),
+    )
+    body = _line_chart(list(zip(sample["month"], sample["actual_sales"])), 60, 78, 680, 210, COLORS[0], "Actual")
+    body += _line_chart(list(zip(sample["month"], sample["best_forecast"])), 60, 78, 680, 210, COLORS[2], best_col.replace("_", " ").title())
+    body += '<text x="60" y="350" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Model RMSE comparison</text>'
+    body += _bar_chart(metrics["model"].tolist(), metrics["RMSE"].tolist(), 60, 386, 660, 190, COLORS[3], horizontal=False)
+    _write_svg(Path(path), 880, 640, body, "Forecast View")
+
+
+def _create_segment_view(profiles, path) -> None:
+    body = _bar_chart(profiles["segment_label"].tolist(), profiles["total_net_sales"].tolist(), 40, 84, 560, 300, COLORS[2])
+    body += '<text x="670" y="86" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment interpretation</text>'
+    y = 126
+    for _, row in profiles.iterrows():
+        body += f"""
+        <text x="670" y="{y}" font-family="Arial" font-size="14" font-weight="700" fill="#111827">{html.escape(row['segment_label'])}</text>
+        <text x="670" y="{y + 22}" font-family="Arial" font-size="12" fill="#6B7280">Categories: {int(row['categories'])}; campaign share: {float(row['campaign_share']):.2%}; volatility: {_fmt(float(row['revenue_volatility']))}</text>
+        """
+        y += 72
+    _write_svg(Path(path), 1120, 470, body, "Segment View")
+
+
+def _create_campaign_view(summary, inference, path) -> None:
+    body = _bar_chart(summary["campaign_flag"].tolist(), summary["avg_net_sales"].tolist(), 80, 84, 480, 240, COLORS[3], horizontal=False)
+    ci = inference.iloc[0]
+    body += f"""
+    <text x="620" y="92" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Causal honesty</text>
+    <text x="620" y="130" font-family="Arial" font-size="13" fill="#374151">Observed difference: {float(ci['observed_difference']):.2f}</text>
+    <text x="620" y="158" font-family="Arial" font-size="13" fill="#374151">95% bootstrap CI: [{float(ci['bootstrap_ci_95_low']):.2f}, {float(ci['bootstrap_ci_95_high']):.2f}]</text>
+    <text x="620" y="202" font-family="Arial" font-size="13" fill="#374151">This is observational campaign comparison.</text>
+    <text x="620" y="230" font-family="Arial" font-size="13" fill="#374151">It should not be presented as causal lift unless randomized assignment exists.</text>
+    """
+    _write_svg(Path(path), 1080, 420, body, "Campaign Comparison View")

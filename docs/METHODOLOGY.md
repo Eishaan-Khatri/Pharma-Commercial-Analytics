@@ -50,19 +50,30 @@ Models used:
 - naive last-period baseline,
 - moving average baseline,
 - linear regression,
-- ridge regression.
+- ridge regression,
+- LightGBM,
+- ridge + LightGBM residual model.
 
 Why these models:
 
 - they are interpretable,
 - they are appropriate for a public portfolio rebuild,
 - they make leakage easier to audit,
-- they fit the original portfolio claim of linear/ridge regression.
+- they fit the original portfolio claim of linear/ridge regression,
+- they add one stronger nonlinear tabular baseline without hiding when it loses.
+
+The reported run uses a chronological split:
+
+- train on older months,
+- validate on the next month block,
+- test on the final month block.
+
+This avoids random-split leakage across time.
 
 Alternatives:
 
 - ARIMA/SARIMA for classical time-series modeling,
-- LightGBM/XGBoost for nonlinear tabular forecasting,
+- XGBoost/CatBoost for additional nonlinear tabular forecasting,
 - Prophet-style models for decomposable trend/seasonality,
 - deep learning only if much more historical data exists.
 
@@ -124,3 +135,5 @@ Dashboard sections:
 - segmentation,
 - campaign comparison.
 
+The public repo includes separate generated SVG views for each of these sections,
+plus one combined executive dashboard.

@@ -35,7 +35,8 @@
 - [ ] Add Tableau or Power BI exported dashboard PDF if available.
 - [ ] Add GitHub Actions smoke test.
 - [ ] Add anonymized real aggregate data if available.
-- [ ] Add ARIMA/SARIMA or LightGBM as stretch forecasting baselines.
+- [x] Add LightGBM and ridge-plus-LightGBM residual forecasting baselines.
+- [ ] Add ARIMA/SARIMA or Prophet-style model as an optional future classical time-series baseline.
 - [ ] Push this folder to the public GitHub repo.
 - [ ] Enable GitHub Pages from the repository root after pushing.
 

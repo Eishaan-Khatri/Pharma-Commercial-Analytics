@@ -16,13 +16,20 @@ This rebuilt project demonstrates a complete pharma commercial analytics workflo
 
 - Data quality report: `outputs/tables/data_quality_report.csv`
 - Forecast metrics: `outputs/tables/forecast_model_metrics.csv`
+- Forecast split summary: `outputs/tables/forecast_split_summary.csv`
 - Segment profiles: `outputs/tables/segment_profiles.csv`
 - A/B-style analysis: `outputs/tables/ab_style_inference.csv`
 - Executive dashboard: `dashboards/screenshots/executive_dashboard.svg`
+- Dashboard views: `dashboards/screenshots/executive_summary.svg`, `category_view.svg`, `forecast_view.svg`, `segment_view.svg`, `campaign_comparison_view.svg`
+- Resume evidence metrics: `outputs/metrics/`
 
 ## Best Forecasting Model In Sample Run
 
-ridge_regression with RMSE 8,538.73.
+linear_regression with RMSE 14,687.75.
+
+Naive baseline RMSE: 18,373.13.
+
+Best-model improvement over naive: 20.06%.
 
 ## Key Limitation
 

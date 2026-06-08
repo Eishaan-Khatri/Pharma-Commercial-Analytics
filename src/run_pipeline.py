@@ -9,6 +9,7 @@ from src.config import (
     CLEAN_DATA_PATH,
     DASHBOARD_DIR,
     FIGURES_DIR,
+    METRICS_DIR,
     REPORTS_DIR,
     SAMPLE_DATA_PATH,
     TABLES_DIR,
@@ -21,6 +22,7 @@ from src.generate_sample_data import generate_transactions
 from src.segmentation import run_segmentation
 from src.visualization import (
     create_dashboard_collage,
+    create_dashboard_views,
     plot_campaign_comparison,
     plot_forecast,
     plot_revenue_trend,
@@ -60,9 +62,10 @@ def run(rows: int = 25_000, force: bool = False) -> None:
     monthly = make_monthly_category_features(clean)
     monthly.to_csv(TABLES_DIR / "monthly_category_features.csv", index=False)
 
-    forecast_metrics, forecast_predictions = run_forecasting(monthly)
+    forecast_metrics, forecast_predictions, split_summary = run_forecasting(monthly)
     forecast_metrics.to_csv(TABLES_DIR / "forecast_model_metrics.csv", index=False)
     forecast_predictions.to_csv(TABLES_DIR / "forecast_predictions.csv", index=False)
+    split_summary.to_csv(TABLES_DIR / "forecast_split_summary.csv", index=False)
 
     seg_features = make_segmentation_features(clean)
     cluster_scores, segmented, segment_profiles = run_segmentation(seg_features)
@@ -73,6 +76,39 @@ def run(rows: int = 25_000, force: bool = False) -> None:
     ab_summary, ab_inference = run_ab_style_analysis(clean)
     ab_summary.to_csv(TABLES_DIR / "ab_style_group_summary.csv", index=False)
     ab_inference.to_csv(TABLES_DIR / "ab_style_inference.csv", index=False)
+
+    naive_rmse = float(forecast_metrics.loc[forecast_metrics["model"] == "naive_last_period", "RMSE"].iloc[0])
+    ridge_rmse = float(forecast_metrics.loc[forecast_metrics["model"] == "ridge_regression", "RMSE"].iloc[0])
+    best_model = forecast_metrics.iloc[0]
+    best_rmse = float(best_model["RMSE"])
+    selected_k_row = cluster_scores[cluster_scores["k"] == 4].iloc[0]
+    run_summary = pd.DataFrame(
+        [
+            {
+                "sample_rows": len(sample),
+                "clean_rows": len(clean),
+                "drug_categories": clean["drug_category"].nunique(),
+                "regions": clean["region"].nunique(),
+                "channels": clean["channel"].nunique(),
+                "monthly_category_rows": len(monthly),
+                "best_forecast_model": best_model["model"],
+                "naive_rmse": naive_rmse,
+                "ridge_rmse": ridge_rmse,
+                "best_rmse": best_rmse,
+                "best_improvement_over_naive_pct": (naive_rmse - best_rmse) / naive_rmse * 100,
+                "best_improvement_over_ridge_pct": (ridge_rmse - best_rmse) / ridge_rmse * 100,
+                "business_selected_clusters": 4,
+                "business_selected_kmeans_silhouette": selected_k_row["silhouette"],
+            }
+        ]
+    )
+    run_summary.to_csv(TABLES_DIR / "run_summary.csv", index=False)
+
+    forecast_metrics.to_csv(METRICS_DIR / "forecast_model_metrics.csv", index=False)
+    split_summary.to_csv(METRICS_DIR / "forecast_split_summary.csv", index=False)
+    cluster_scores.to_csv(METRICS_DIR / "cluster_selection_scores.csv", index=False)
+    ab_inference.to_csv(METRICS_DIR / "campaign_comparison_ci.csv", index=False)
+    run_summary.to_csv(METRICS_DIR / "run_summary.csv", index=False)
 
     plot_revenue_trend(clean, FIGURES_DIR / "monthly_revenue_trend.svg")
     plot_top_categories(clean, FIGURES_DIR / "top_categories.svg")
@@ -86,8 +122,21 @@ def run(rows: int = 25_000, force: bool = False) -> None:
         ab_summary,
         DASHBOARD_DIR / "executive_dashboard.svg",
     )
+    create_dashboard_views(
+        clean,
+        forecast_metrics,
+        forecast_predictions,
+        segment_profiles,
+        ab_summary,
+        ab_inference,
+        DASHBOARD_DIR,
+    )
 
     best_model = forecast_metrics.iloc[0]
+    model_table = df_to_markdown(
+        forecast_metrics[["model", "validation_RMSE", "MAE", "RMSE", "sMAPE", "selected_params"]].round(4)
+    )
+    split_table = df_to_markdown(split_summary)
     write_markdown(
         REPORTS_DIR / "eda_summary.md",
         "EDA Summary",
@@ -117,7 +166,16 @@ RMSE: {best_model['RMSE']:,.2f}
 
 sMAPE: {best_model['sMAPE']:,.2f}%
 
-Validation design: month-based holdout. This avoids random-split leakage across time.
+Validation design: leakage-aware month-based split. Training uses older months,
+validation uses the next chronological block, and testing uses the final months.
+
+## Split Summary
+
+{split_table}
+
+## Model Comparison
+
+{model_table}
 """,
     )
     write_markdown(
@@ -156,13 +214,20 @@ This rebuilt project demonstrates a complete pharma commercial analytics workflo
 
 - Data quality report: `outputs/tables/data_quality_report.csv`
 - Forecast metrics: `outputs/tables/forecast_model_metrics.csv`
+- Forecast split summary: `outputs/tables/forecast_split_summary.csv`
 - Segment profiles: `outputs/tables/segment_profiles.csv`
 - A/B-style analysis: `outputs/tables/ab_style_inference.csv`
 - Executive dashboard: `dashboards/screenshots/executive_dashboard.svg`
+- Dashboard views: `dashboards/screenshots/executive_summary.svg`, `category_view.svg`, `forecast_view.svg`, `segment_view.svg`, `campaign_comparison_view.svg`
+- Resume evidence metrics: `outputs/metrics/`
 
 ## Best Forecasting Model In Sample Run
 
 {best_model['model']} with RMSE {best_model['RMSE']:,.2f}.
+
+Naive baseline RMSE: {naive_rmse:,.2f}.
+
+Best-model improvement over naive: {(naive_rmse - best_rmse) / naive_rmse * 100:,.2f}%.
 
 ## Key Limitation
 

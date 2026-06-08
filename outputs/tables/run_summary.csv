@@ -1,0 +1,2 @@
+sample_rows,clean_rows,drug_categories,regions,channels,monthly_category_rows,best_forecast_model,naive_rmse,ridge_rmse,best_rmse,best_improvement_over_naive_pct,best_improvement_over_ridge_pct,business_selected_clusters,business_selected_kmeans_silhouette
+25000,25000,57,5,5,1354,linear_regression,18373.12678002283,14769.90536502995,14687.75096670781,20.058511855054213,0.5562283324892067,4,0.4035537005292081

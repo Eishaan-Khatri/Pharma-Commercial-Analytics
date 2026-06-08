@@ -5,80 +5,84 @@
     
     <rect x="28" y="58" width="250" height="72" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="44" y="84" font-family="Arial" font-size="12" fill="#6B7280">Net Sales</text>
-    <text x="44" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">30.8M</text>
+    <text x="44" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">58.2M</text>
     <rect x="298" y="58" width="250" height="72" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="314" y="84" font-family="Arial" font-size="12" fill="#6B7280">Transactions</text>
     <text x="314" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">25,000</text>
     <rect x="568" y="58" width="250" height="72" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="584" y="84" font-family="Arial" font-size="12" fill="#6B7280">Units Sold</text>
-    <text x="584" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">582,255</text>
+    <text x="584" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">816,718</text>
     <rect x="838" y="58" width="250" height="72" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="854" y="84" font-family="Arial" font-size="12" fill="#6B7280">Avg Order</text>
-    <text x="854" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">1.2K</text>
+    <text x="854" y="112" font-family="Arial" font-size="24" font-weight="700" fill="#111827">2.3K</text>
     
     <text x="48" y="165" font-family="Arial" font-size="16" font-weight="700" fill="#111827">Trend</text>
     
-    <polyline points="48.0,295.6 68.4,308.1 88.9,242.6 109.3,231.2 129.7,212.5 150.2,284.2 170.6,303.9 191.0,313.2 211.5,369.9 231.9,332.3 252.3,315.7 272.8,336.8 293.2,253.9 313.7,328.0 334.1,209.9 354.5,224.8 375.0,190.0 395.4,245.0 415.8,252.7 436.3,320.5 456.7,342.7 477.1,328.4 497.6,380.0 518.0,291.8" fill="none" stroke="#1D4ED8" stroke-width="2.5"/>
-    <circle cx="48.0" cy="295.6" r="3" fill="#1D4ED8"/>
-<circle cx="68.4" cy="308.1" r="3" fill="#1D4ED8"/>
-<circle cx="88.9" cy="242.6" r="3" fill="#1D4ED8"/>
-<circle cx="109.3" cy="231.2" r="3" fill="#1D4ED8"/>
-<circle cx="129.7" cy="212.5" r="3" fill="#1D4ED8"/>
-<circle cx="150.2" cy="284.2" r="3" fill="#1D4ED8"/>
-<circle cx="170.6" cy="303.9" r="3" fill="#1D4ED8"/>
-<circle cx="191.0" cy="313.2" r="3" fill="#1D4ED8"/>
-<circle cx="211.5" cy="369.9" r="3" fill="#1D4ED8"/>
-<circle cx="231.9" cy="332.3" r="3" fill="#1D4ED8"/>
-<circle cx="252.3" cy="315.7" r="3" fill="#1D4ED8"/>
-<circle cx="272.8" cy="336.8" r="3" fill="#1D4ED8"/>
-<circle cx="293.2" cy="253.9" r="3" fill="#1D4ED8"/>
-<circle cx="313.7" cy="328.0" r="3" fill="#1D4ED8"/>
-<circle cx="334.1" cy="209.9" r="3" fill="#1D4ED8"/>
-<circle cx="354.5" cy="224.8" r="3" fill="#1D4ED8"/>
-<circle cx="375.0" cy="190.0" r="3" fill="#1D4ED8"/>
-<circle cx="395.4" cy="245.0" r="3" fill="#1D4ED8"/>
-<circle cx="415.8" cy="252.7" r="3" fill="#1D4ED8"/>
-<circle cx="436.3" cy="320.5" r="3" fill="#1D4ED8"/>
-<circle cx="456.7" cy="342.7" r="3" fill="#1D4ED8"/>
-<circle cx="477.1" cy="328.4" r="3" fill="#1D4ED8"/>
-<circle cx="497.6" cy="380.0" r="3" fill="#1D4ED8"/>
-<circle cx="518.0" cy="291.8" r="3" fill="#1D4ED8"/>
+    <polyline points="48.0,360.0 68.4,380.0 88.9,330.1 109.3,310.6 129.7,301.6 150.2,315.5 170.6,338.6 191.0,336.1 211.5,372.5 231.9,342.9 252.3,331.2 272.8,338.5 293.2,255.0 313.7,286.6 334.1,208.7 354.5,224.5 375.0,201.6 395.4,212.2 415.8,190.2 436.3,284.4 456.7,298.4 477.1,292.9 497.6,277.8 518.0,190.0" fill="none" stroke="#1D4ED8" stroke-width="2.5"/>
+    <circle cx="48.0" cy="360.0" r="3" fill="#1D4ED8"/>
+<circle cx="68.4" cy="380.0" r="3" fill="#1D4ED8"/>
+<circle cx="88.9" cy="330.1" r="3" fill="#1D4ED8"/>
+<circle cx="109.3" cy="310.6" r="3" fill="#1D4ED8"/>
+<circle cx="129.7" cy="301.6" r="3" fill="#1D4ED8"/>
+<circle cx="150.2" cy="315.5" r="3" fill="#1D4ED8"/>
+<circle cx="170.6" cy="338.6" r="3" fill="#1D4ED8"/>
+<circle cx="191.0" cy="336.1" r="3" fill="#1D4ED8"/>
+<circle cx="211.5" cy="372.5" r="3" fill="#1D4ED8"/>
+<circle cx="231.9" cy="342.9" r="3" fill="#1D4ED8"/>
+<circle cx="252.3" cy="331.2" r="3" fill="#1D4ED8"/>
+<circle cx="272.8" cy="338.5" r="3" fill="#1D4ED8"/>
+<circle cx="293.2" cy="255.0" r="3" fill="#1D4ED8"/>
+<circle cx="313.7" cy="286.6" r="3" fill="#1D4ED8"/>
+<circle cx="334.1" cy="208.7" r="3" fill="#1D4ED8"/>
+<circle cx="354.5" cy="224.5" r="3" fill="#1D4ED8"/>
+<circle cx="375.0" cy="201.6" r="3" fill="#1D4ED8"/>
+<circle cx="395.4" cy="212.2" r="3" fill="#1D4ED8"/>
+<circle cx="415.8" cy="190.2" r="3" fill="#1D4ED8"/>
+<circle cx="436.3" cy="284.4" r="3" fill="#1D4ED8"/>
+<circle cx="456.7" cy="298.4" r="3" fill="#1D4ED8"/>
+<circle cx="477.1" cy="292.9" r="3" fill="#1D4ED8"/>
+<circle cx="497.6" cy="277.8" r="3" fill="#1D4ED8"/>
+<circle cx="518.0" cy="190.0" r="3" fill="#1D4ED8"/>
     <text x="48" y="182" font-family="Arial" font-size="12" fill="#1D4ED8">Monthly sales</text>
     <text x="48" y="398" font-family="Arial" font-size="11" fill="#6B7280">2024-01</text>
     <text x="462" y="398" font-family="Arial" font-size="11" fill="#6B7280">2025-12</text>
     
     <text x="590" y="165" font-family="Arial" font-size="16" font-weight="700" fill="#111827">Top Categories</text>
-    <text x="590" y="193.6" font-family="Arial" font-size="11" fill="#374151">Hepatology</text>
+    <text x="590" y="193.6" font-family="Arial" font-size="11" fill="#374151">Probiotics</text>
 <rect x="770" y="175.0" width="310.0" height="24.8" fill="#B45309" rx="3"/>
-<text x="1086.0" y="193.6" font-family="Arial" font-size="10" fill="#6B7280">3.3M</text>
-<text x="590" y="225.5" font-family="Arial" font-size="11" fill="#374151">Diagnostic Aids</text>
-<rect x="770" y="206.8" width="281.8" height="24.8" fill="#B45309" rx="3"/>
-<text x="1057.8" y="225.5" font-family="Arial" font-size="10" fill="#6B7280">3.0M</text>
-<text x="590" y="257.3" font-family="Arial" font-size="11" fill="#374151">Hypertension</text>
-<rect x="770" y="238.7" width="201.9" height="24.8" fill="#B45309" rx="3"/>
-<text x="977.9" y="257.3" font-family="Arial" font-size="10" fill="#6B7280">2.2M</text>
-<text x="590" y="289.1" font-family="Arial" font-size="11" fill="#374151">ENT</text>
-<rect x="770" y="270.5" width="171.1" height="24.8" fill="#B45309" rx="3"/>
-<text x="947.1" y="289.1" font-family="Arial" font-size="10" fill="#6B7280">1.8M</text>
-<text x="590" y="321.0" font-family="Arial" font-size="11" fill="#374151">Antidiabetics</text>
-<rect x="770" y="302.3" width="140.4" height="24.8" fill="#B45309" rx="3"/>
-<text x="916.4" y="321.0" font-family="Arial" font-size="10" fill="#6B7280">1.5M</text>
+<text x="1086.0" y="193.6" font-family="Arial" font-size="10" fill="#6B7280">4.4M</text>
+<text x="590" y="225.5" font-family="Arial" font-size="11" fill="#374151">Smoking Cessation</text>
+<rect x="770" y="206.8" width="278.5" height="24.8" fill="#B45309" rx="3"/>
+<text x="1054.5" y="225.5" font-family="Arial" font-size="10" fill="#6B7280">3.9M</text>
+<text x="590" y="257.3" font-family="Arial" font-size="11" fill="#374151">Oral Rehydration</text>
+<rect x="770" y="238.7" width="266.1" height="24.8" fill="#B45309" rx="3"/>
+<text x="1042.1" y="257.3" font-family="Arial" font-size="10" fill="#6B7280">3.8M</text>
+<text x="590" y="289.1" font-family="Arial" font-size="11" fill="#374151">Pain Management</text>
+<rect x="770" y="270.5" width="253.9" height="24.8" fill="#B45309" rx="3"/>
+<text x="1029.9" y="289.1" font-family="Arial" font-size="10" fill="#6B7280">3.6M</text>
+<text x="590" y="321.0" font-family="Arial" font-size="11" fill="#374151">Rare Disease</text>
+<rect x="770" y="302.3" width="214.4" height="24.8" fill="#B45309" rx="3"/>
+<text x="990.4" y="321.0" font-family="Arial" font-size="10" fill="#6B7280">3.0M</text>
 <text x="590" y="352.8" font-family="Arial" font-size="11" fill="#374151">Antihistamines</text>
-<rect x="770" y="334.2" width="124.8" height="24.8" fill="#B45309" rx="3"/>
-<text x="900.8" y="352.8" font-family="Arial" font-size="10" fill="#6B7280">1.3M</text>
+<rect x="770" y="334.2" width="184.1" height="24.8" fill="#B45309" rx="3"/>
+<text x="960.1" y="352.8" font-family="Arial" font-size="10" fill="#6B7280">2.6M</text>
     <text x="60" y="465" font-family="Arial" font-size="16" font-weight="700" fill="#111827">Forecast RMSE</text>
-    <rect x="60.0" y="539.0" width="70.0" height="131.0" fill="#047857" rx="3"/>
-<text x="60.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 60.0,686)">ridge_regression</text>
-<rect x="144.0" y="535.3" width="70.0" height="134.7" fill="#047857" rx="3"/>
-<text x="144.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 144.0,686)">moving_average_3</text>
-<rect x="228.0" y="533.2" width="70.0" height="136.8" fill="#047857" rx="3"/>
-<text x="228.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 228.0,686)">linear_regressio</text>
-<rect x="312.0" y="490.0" width="70.0" height="180.0" fill="#047857" rx="3"/>
-<text x="312.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 312.0,686)">naive_last_perio</text>
+    <rect x="60.0" y="526.1" width="54.7" height="143.9" fill="#047857" rx="3"/>
+<text x="60.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 60.0,686)">linear_regressio</text>
+<rect x="128.7" y="525.3" width="54.7" height="144.7" fill="#047857" rx="3"/>
+<text x="128.7" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 128.7,686)">ridge_regression</text>
+<rect x="197.3" y="518.8" width="54.7" height="151.2" fill="#047857" rx="3"/>
+<text x="197.3" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 197.3,686)">ridge_lightgbm_r</text>
+<rect x="266.0" y="508.2" width="54.7" height="161.8" fill="#047857" rx="3"/>
+<text x="266.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 266.0,686)">moving_average_3</text>
+<rect x="334.7" y="497.2" width="54.7" height="172.8" fill="#047857" rx="3"/>
+<text x="334.7" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 334.7,686)">lightgbm</text>
+<rect x="403.3" y="490.0" width="54.7" height="180.0" fill="#047857" rx="3"/>
+<text x="403.3" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 403.3,686)">naive_last_perio</text>
     <text x="620" y="465" font-family="Arial" font-size="16" font-weight="700" fill="#111827">Campaign Comparison</text>
-    <rect x="620.0" y="493.7" width="70.0" height="176.3" fill="#7C3AED" rx="3"/>
+    <rect x="620.0" y="490.0" width="70.0" height="180.0" fill="#7C3AED" rx="3"/>
 <text x="620.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 620.0,686)">non_campaign</text>
-<rect x="704.0" y="490.0" width="70.0" height="180.0" fill="#7C3AED" rx="3"/>
+<rect x="704.0" y="502.8" width="70.0" height="167.2" fill="#7C3AED" rx="3"/>
 <text x="704.0" y="686" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 704.0,686)">campaign</text>
     
 </svg>

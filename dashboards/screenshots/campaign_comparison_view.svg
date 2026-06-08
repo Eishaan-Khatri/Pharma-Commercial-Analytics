@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="420" viewBox="0 0 1080 420">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="24" y="34" font-family="Arial" font-size="20" font-weight="700" fill="#111827">Campaign Comparison View</text>
+  <rect x="80.0" y="84.0" width="70.0" height="240.0" fill="#7C3AED" rx="3"/>
+<text x="80.0" y="340" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 80.0,340)">non_campaign</text>
+<rect x="164.0" y="101.0" width="70.0" height="223.0" fill="#7C3AED" rx="3"/>
+<text x="164.0" y="340" font-family="Arial" font-size="10" fill="#6B7280" transform="rotate(20 164.0,340)">campaign</text>
+    <text x="620" y="92" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Causal honesty</text>
+    <text x="620" y="130" font-family="Arial" font-size="13" fill="#374151">Observed difference: -166.92</text>
+    <text x="620" y="158" font-family="Arial" font-size="13" fill="#374151">95% bootstrap CI: [-227.41, -109.70]</text>
+    <text x="620" y="202" font-family="Arial" font-size="13" fill="#374151">This is observational campaign comparison.</text>
+    <text x="620" y="230" font-family="Arial" font-size="13" fill="#374151">It should not be presented as causal lift unless randomized assignment exists.</text>
+    
+</svg>

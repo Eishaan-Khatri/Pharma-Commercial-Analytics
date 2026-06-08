@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 
@@ -20,19 +21,22 @@ def run_segmentation(features: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame
     x_scaled = _standardize(x)
 
     score_rows = []
+    labels_by_k = {}
     for k in range(2, 8):
-        labels, centroids, inertia = _kmeans(x_scaled, k=k, seed=42)
+        labels, inertia, silhouette = _fit_kmeans(x_scaled, k=k, seed=42)
+        labels_by_k[k] = labels
         score_rows.append(
             {
                 "k": k,
                 "inertia": float(inertia),
-                "silhouette": float(_silhouette_score(x_scaled, labels)),
+                "silhouette": float(silhouette),
+                "selection_note": "business_selected" if k == 4 else "diagnostic",
             }
         )
     scores = pd.DataFrame(score_rows)
-    best_k = int(scores.sort_values("silhouette", ascending=False).iloc[0]["k"])
 
-    labels, _, _ = _kmeans(x_scaled, k=best_k, seed=42)
+    selected_k = 4
+    labels = labels_by_k[selected_k]
     segmented = features.copy()
     segmented["cluster"] = labels
 
@@ -48,6 +52,7 @@ def run_segmentation(features: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame
             revenue_volatility=("revenue_volatility", "mean"),
         )
         .sort_values("total_net_sales", ascending=False)
+        .reset_index(drop=True)
     )
     profiles["segment_label"] = _label_profiles(profiles)
     segmented = segmented.merge(profiles[["cluster", "segment_label"]], on="cluster", how="left")
@@ -55,39 +60,55 @@ def run_segmentation(features: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame
 
 
 def _label_profiles(profiles: pd.DataFrame) -> list[str]:
-    top_sales_cluster = profiles.sort_values("total_net_sales", ascending=False).iloc[0]["cluster"]
-    volatility_high = profiles["revenue_volatility"].median()
-    campaign_high = profiles["campaign_share"].median()
-    discount_high = profiles["avg_discount_rate"].median()
-    low_sales = profiles["total_net_sales"].median()
+    labels_by_cluster: dict[int, str] = {}
+    remaining = set(profiles["cluster"].tolist())
 
-    labels = []
-    for _, row in profiles.iterrows():
-        if row["cluster"] == top_sales_cluster and row["growth_rate"] > 0:
-            labels.append("High-value growing categories")
-        elif row["campaign_share"] >= campaign_high and row["growth_rate"] > 0:
-            labels.append("Campaign-responsive categories")
-        elif row["revenue_volatility"] >= volatility_high:
-            labels.append("Volatile categories")
-        elif row["avg_discount_rate"] >= discount_high:
-            labels.append("Discount-sensitive categories")
-        elif row["total_net_sales"] < low_sales:
-            labels.append("Niche low-volume categories")
-        else:
-            labels.append("Stable baseline categories")
-    return labels
+    low_volume_cluster = int(profiles.sort_values("total_net_sales", ascending=True).iloc[0]["cluster"])
+    labels_by_cluster[low_volume_cluster] = "Low-volume niche"
+    remaining.discard(low_volume_cluster)
+
+    high_value_candidates = profiles[profiles["cluster"].isin(remaining)].copy()
+    high_value_candidates["score"] = (
+        high_value_candidates["total_net_sales"].rank(pct=True)
+        + high_value_candidates["growth_rate"].rank(pct=True)
+    )
+    high_value_cluster = int(high_value_candidates.sort_values("score", ascending=False).iloc[0]["cluster"])
+    labels_by_cluster[high_value_cluster] = "High-value growing"
+    remaining.discard(high_value_cluster)
+
+    campaign_candidates = profiles[profiles["cluster"].isin(remaining)].copy()
+    campaign_cluster = int(campaign_candidates.sort_values("campaign_share", ascending=False).iloc[0]["cluster"])
+    labels_by_cluster[campaign_cluster] = "Campaign-responsive"
+    remaining.discard(campaign_cluster)
+
+    for cluster in remaining:
+        labels_by_cluster[int(cluster)] = "Stable core"
+
+    return [labels_by_cluster[int(cluster)] for cluster in profiles["cluster"]]
 
 
-def _standardize(x):
+def _standardize(x: np.ndarray) -> np.ndarray:
     mean = x.mean(axis=0)
     std = x.std(axis=0)
     std[std == 0] = 1.0
     return (x - mean) / std
 
 
-def _kmeans(x, k: int, seed: int = 42, max_iter: int = 100):
-    import numpy as np
+def _fit_kmeans(x: np.ndarray, k: int, seed: int = 42) -> tuple[np.ndarray, float, float]:
+    try:
+        from sklearn.cluster import KMeans
+        from sklearn.metrics import silhouette_score
 
+        model = KMeans(n_clusters=k, random_state=seed, n_init=50)
+        labels = model.fit_predict(x)
+        silhouette = silhouette_score(x, labels)
+        return labels, float(model.inertia_), float(silhouette)
+    except Exception:
+        labels, _, inertia = _kmeans_fallback(x, k=k, seed=seed)
+        return labels, float(inertia), float(_silhouette_score_fallback(x, labels))
+
+
+def _kmeans_fallback(x: np.ndarray, k: int, seed: int = 42, max_iter: int = 100):
     rng = np.random.default_rng(seed + k)
     centroids = x[rng.choice(len(x), size=k, replace=False)].copy()
     labels = np.zeros(len(x), dtype=int)
@@ -109,9 +130,7 @@ def _kmeans(x, k: int, seed: int = 42, max_iter: int = 100):
     return labels, centroids, inertia
 
 
-def _silhouette_score(x, labels):
-    import numpy as np
-
+def _silhouette_score_fallback(x: np.ndarray, labels: np.ndarray) -> float:
     unique_labels = np.unique(labels)
     if len(unique_labels) < 2:
         return 0.0

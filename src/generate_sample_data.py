@@ -18,22 +18,67 @@ from src.config import (
 
 
 def _category_parameters(rng: np.random.Generator) -> pd.DataFrame:
-    weights = rng.dirichlet(np.linspace(3.0, 0.7, len(DRUG_CATEGORIES)))
-    base_prices = rng.lognormal(mean=4.0, sigma=0.45, size=len(DRUG_CATEGORIES))
-    base_units = rng.integers(4, 35, size=len(DRUG_CATEGORIES))
-    trend = rng.normal(loc=0.015, scale=0.035, size=len(DRUG_CATEGORIES))
-    campaign_lift = rng.uniform(0.04, 0.22, size=len(DRUG_CATEGORIES))
-
-    return pd.DataFrame(
-        {
-            "drug_category": DRUG_CATEGORIES,
-            "category_weight": weights,
-            "base_price": base_prices,
-            "base_units": base_units,
-            "trend": trend,
-            "campaign_lift": campaign_lift,
-        }
+    archetypes = (
+        ["high_value_growing"] * 14
+        + ["stable_core"] * 25
+        + ["campaign_responsive"] * 12
+        + ["low_volume_niche"] * 6
     )
+    rng.shuffle(archetypes)
+
+    rows = []
+    for category, archetype in zip(DRUG_CATEGORIES, archetypes):
+        if archetype == "high_value_growing":
+            weight = rng.uniform(0.022, 0.040)
+            base_price = rng.lognormal(mean=4.75, sigma=0.18)
+            base_units = rng.integers(22, 42)
+            trend = rng.normal(loc=0.030, scale=0.010)
+            campaign_lift = rng.uniform(0.05, 0.12)
+            campaign_propensity = rng.uniform(0.08, 0.16)
+            demand_volatility = rng.uniform(0.05, 0.10)
+        elif archetype == "stable_core":
+            weight = rng.uniform(0.014, 0.024)
+            base_price = rng.lognormal(mean=4.20, sigma=0.16)
+            base_units = rng.integers(12, 28)
+            trend = rng.normal(loc=0.008, scale=0.007)
+            campaign_lift = rng.uniform(0.03, 0.09)
+            campaign_propensity = rng.uniform(0.08, 0.15)
+            demand_volatility = rng.uniform(0.04, 0.08)
+        elif archetype == "campaign_responsive":
+            weight = rng.uniform(0.010, 0.022)
+            base_price = rng.lognormal(mean=3.95, sigma=0.22)
+            base_units = rng.integers(10, 24)
+            trend = rng.normal(loc=0.016, scale=0.012)
+            campaign_lift = rng.uniform(0.22, 0.42)
+            campaign_propensity = rng.uniform(0.19, 0.34)
+            demand_volatility = rng.uniform(0.09, 0.16)
+        else:
+            weight = rng.uniform(0.0025, 0.0065)
+            base_price = rng.lognormal(mean=3.70, sigma=0.28)
+            base_units = rng.integers(3, 11)
+            trend = rng.normal(loc=0.000, scale=0.018)
+            campaign_lift = rng.uniform(0.02, 0.08)
+            campaign_propensity = rng.uniform(0.02, 0.08)
+            demand_volatility = rng.uniform(0.11, 0.20)
+
+        rows.append(
+            {
+                "drug_category": category,
+                "archetype": archetype,
+                "category_weight": weight,
+                "base_price": base_price,
+                "base_units": base_units,
+                "trend": trend,
+                "campaign_lift": campaign_lift,
+                "campaign_propensity": campaign_propensity,
+                "demand_volatility": demand_volatility,
+            }
+        )
+
+    params = pd.DataFrame(rows)
+    params["category_weight"] = params["category_weight"] / params["category_weight"].sum()
+
+    return params
 
 
 def generate_transactions(rows: int = 25_000, seed: int = RANDOM_SEED) -> pd.DataFrame:
@@ -55,7 +100,8 @@ def generate_transactions(rows: int = 25_000, seed: int = RANDOM_SEED) -> pd.Dat
     seasonality = 1.0 + 0.12 * np.sin((months - 1) / 12 * 2 * np.pi)
     trend_multiplier = 1.0 + selected["trend"].to_numpy() * month_index
 
-    campaign_probability = np.where(np.isin(months, [3, 4, 9, 10]), 0.26, 0.12)
+    campaign_probability = selected["campaign_propensity"].to_numpy() + np.where(np.isin(months, [3, 4, 9, 10]), 0.08, 0.0)
+    campaign_probability = campaign_probability.clip(0.01, 0.46)
     campaign_flag = rng.binomial(1, campaign_probability)
     campaign_multiplier = 1.0 + campaign_flag * selected["campaign_lift"].to_numpy()
 
@@ -63,12 +109,18 @@ def generate_transactions(rows: int = 25_000, seed: int = RANDOM_SEED) -> pd.Dat
         {"Retail": 1.00, "Hospital": 1.18, "Distributor": 1.35, "Online": 0.82, "Government": 1.55}
     ).to_numpy()
 
+    random_demand_multiplier = rng.lognormal(
+        mean=0.0,
+        sigma=selected["demand_volatility"].to_numpy(),
+        size=rows,
+    )
     expected_units = (
         selected["base_units"].to_numpy()
         * seasonality
         * trend_multiplier.clip(0.55, 1.65)
         * campaign_multiplier
         * channel_multiplier
+        * random_demand_multiplier
     )
     units_sold = rng.poisson(np.maximum(expected_units, 1)).clip(1, None)
 
@@ -129,4 +181,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -7,6 +7,7 @@ SAMPLE_DIR = DATA_DIR / "sample"
 OUTPUT_DIR = ROOT / "outputs"
 TABLES_DIR = OUTPUT_DIR / "tables"
 FIGURES_DIR = OUTPUT_DIR / "figures"
+METRICS_DIR = OUTPUT_DIR / "metrics"
 DASHBOARD_DIR = ROOT / "dashboards" / "screenshots"
 REPORTS_DIR = ROOT / "reports"
 
@@ -44,6 +45,5 @@ CUSTOMER_SEGMENTS = [
 ]
 
 def ensure_directories() -> None:
-    for path in [SAMPLE_DIR, OUTPUT_DIR, TABLES_DIR, FIGURES_DIR, DASHBOARD_DIR, REPORTS_DIR]:
+    for path in [SAMPLE_DIR, OUTPUT_DIR, TABLES_DIR, FIGURES_DIR, METRICS_DIR, DASHBOARD_DIR, REPORTS_DIR]:
         path.mkdir(parents=True, exist_ok=True)
-

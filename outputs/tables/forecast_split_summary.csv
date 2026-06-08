@@ -1,0 +1,4 @@
+split,rows,months,start_month,end_month
+train,732,13,2024-03,2025-03
+validation,227,4,2025-04,2025-07
+test,281,5,2025-08,2025-12

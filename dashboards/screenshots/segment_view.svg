@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="24" y="34" font-family="Arial" font-size="20" font-weight="700" fill="#111827">Segment View</text>
+  <text x="40" y="105.0" font-family="Arial" font-size="11" fill="#374151">High-value growing</text>
+<rect x="220" y="84.0" width="560.0" height="28.0" fill="#047857" rx="3"/>
+<text x="786.0" y="105.0" font-family="Arial" font-size="10" fill="#6B7280">2.8M</text>
+<text x="40" y="140.0" font-family="Arial" font-size="11" fill="#374151">Stable core</text>
+<rect x="220" y="119.0" width="101.8" height="28.0" fill="#047857" rx="3"/>
+<text x="327.8" y="140.0" font-family="Arial" font-size="10" fill="#6B7280">513.6K</text>
+<text x="40" y="175.0" font-family="Arial" font-size="11" fill="#374151">Campaign-responsive</text>
+<rect x="220" y="154.0" width="93.1" height="28.0" fill="#047857" rx="3"/>
+<text x="319.1" y="175.0" font-family="Arial" font-size="10" fill="#6B7280">469.6K</text>
+<text x="40" y="210.0" font-family="Arial" font-size="11" fill="#374151">Low-volume niche</text>
+<rect x="220" y="189.0" width="3.9" height="28.0" fill="#047857" rx="3"/>
+<text x="229.9" y="210.0" font-family="Arial" font-size="10" fill="#6B7280">19.5K</text><text x="670" y="86" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment interpretation</text>
+        <text x="670" y="126" font-family="Arial" font-size="14" font-weight="700" fill="#111827">High-value growing</text>
+        <text x="670" y="148" font-family="Arial" font-size="12" fill="#6B7280">Categories: 14; campaign share: 13.85%; volatility: 28.7K</text>
+        
+        <text x="670" y="198" font-family="Arial" font-size="14" font-weight="700" fill="#111827">Stable core</text>
+        <text x="670" y="220" font-family="Arial" font-size="12" fill="#6B7280">Categories: 26; campaign share: 14.49%; volatility: 5.7K</text>
+        
+        <text x="670" y="270" font-family="Arial" font-size="14" font-weight="700" fill="#111827">Campaign-responsive</text>
+        <text x="670" y="292" font-family="Arial" font-size="12" fill="#6B7280">Categories: 11; campaign share: 28.72%; volatility: 5.7K</text>
+        
+        <text x="670" y="342" font-family="Arial" font-size="14" font-weight="700" fill="#111827">Low-volume niche</text>
+        <text x="670" y="364" font-family="Arial" font-size="12" fill="#6B7280">Categories: 6; campaign share: 6.26%; volatility: 446.7</text>
+        
+</svg>

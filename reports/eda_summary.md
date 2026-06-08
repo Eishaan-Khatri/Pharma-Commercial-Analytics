@@ -8,6 +8,6 @@ Drug categories: 57
 
 Date range: 2024-01-01 to 2025-12-31
 
-Total net sales in sample: 30,849,844.24
+Total net sales in sample: 58,196,994.01
 
-Top category by sample revenue: Hepatology
+Top category by sample revenue: Probiotics

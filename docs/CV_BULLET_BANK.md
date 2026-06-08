@@ -22,12 +22,15 @@ commercial sales data.
 | Public sample run uses 25,000 generated transaction rows | `outputs/tables/data_quality_report.csv` |
 | Dataset shape includes 57 drug categories, 5 regions, and 5 channels | `outputs/tables/data_quality_report.csv` |
 | Date range spans 2024-01-01 to 2025-12-31 | `outputs/tables/data_quality_report.csv` |
-| Forecasting compares naive, moving average, linear regression, and ridge regression | `outputs/tables/forecast_model_metrics.csv` |
-| Ridge regression is best by RMSE in the sample run: 8,538.73 | `outputs/tables/forecast_model_metrics.csv` |
-| K-means category segmentation chooses 3 clusters with best silhouette score: 0.3708 | `outputs/tables/cluster_selection_scores.csv` |
-| Segment profiles separate high-value growing, campaign-responsive, and niche low-volume categories | `outputs/tables/segment_profiles.csv` |
+| Monthly category table contains 1,354 category-month rows | `outputs/metrics/run_summary.csv` |
+| Forecasting compares naive, moving average, linear regression, ridge regression, LightGBM, and ridge + LightGBM residual | `outputs/metrics/forecast_model_metrics.csv` |
+| Final test uses chronological holdout: train older months, validate next block, test final months | `outputs/metrics/forecast_split_summary.csv` |
+| Linear regression is best by final-test RMSE in the sample run: 14,687.75 | `outputs/metrics/forecast_model_metrics.csv` |
+| Best model improves RMSE over naive baseline by 20.06% | `outputs/metrics/run_summary.csv` |
+| K-means category segmentation uses 4 business-selected clusters with silhouette 0.4036 | `outputs/metrics/cluster_selection_scores.csv` |
+| Segment profiles separate high-value growing, stable core, campaign-responsive, and low-volume niche categories | `outputs/tables/segment_profiles.csv` |
 | Campaign comparison includes bootstrap confidence interval and explicitly avoids causal claims | `outputs/tables/ab_style_inference.csv` |
-| Dashboard-style executive output exists | `dashboards/screenshots/executive_dashboard.svg` |
+| Dashboard-style executive output and four detailed views exist | `dashboards/screenshots/` |
 | Methodology, limitations, interview guide, and claim ledger are documented | `docs/` |
 
 ## Final 3 Best CV Bullets
@@ -36,8 +39,8 @@ Use these three bullets when this project appears in a CV or resume.
 
 ```text
 - Built a reproducible pharma commercial analytics workflow covering transaction cleaning, SQL-style KPI analysis, forecasting, category segmentation, campaign comparison, and executive dashboard reporting.
-- Implemented leakage-aware forecasting baselines across 57 drug categories, comparing naive, moving-average, linear regression, and ridge regression models; ridge achieved the best sample-run RMSE of 8,538.73.
-- Designed K-means category segmentation and campaign comparison modules, separating categories into high-value growing, campaign-responsive, and niche low-volume groups while documenting non-causal limitations with bootstrap confidence intervals.
+- Compared six forecasting baselines across 57 drug categories using chronological train/validation/test splits; the best final-test model reduced RMSE by 20.06% versus the naive baseline.
+- Designed four business-readable K-means category segments and campaign comparison modules, separating high-value growing, stable core, campaign-responsive, and low-volume niche groups while documenting non-causal limitations with bootstrap confidence intervals.
 ```
 
 ## Shorter One-Page Resume Version
@@ -46,7 +49,7 @@ Use this if space is tight.
 
 ```text
 - Built a reproducible pharma commercial analytics pipeline for transaction cleaning, KPI analysis, forecasting, segmentation, campaign comparison, and dashboard reporting.
-- Compared time-series forecasting baselines across 57 categories; ridge regression produced the best sample-run RMSE of 8,538.73.
+- Compared six forecasting baselines across 57 categories; the best chronological-test model improved RMSE by 20.06% over naive.
 - Segmented categories using K-means and translated outputs into executive-facing dashboard views with documented limitations and claim boundaries.
 ```
 
@@ -57,8 +60,8 @@ Science roles.
 
 ```text
 - Developed an end-to-end commercial analytics pipeline over pharma-style transaction data, including validation, SQL-style KPI generation, monthly feature aggregation, forecasting, segmentation, and reporting.
-- Benchmarked forecasting baselines with a leakage-aware time split across 57 categories; compared naive, moving-average, linear regression, and ridge regression models with RMSE/MAE/sMAPE reporting.
-- Built interpretable K-means segment profiles and A/B-style campaign comparisons, using bootstrap confidence intervals and explicit non-causal framing to keep business recommendations defensible.
+- Benchmarked forecasting baselines with leakage-aware chronological splits across 57 categories; compared naive, moving-average, linear regression, ridge regression, LightGBM, and ridge + LightGBM residual models with RMSE/MAE/sMAPE reporting.
+- Built interpretable 4-cluster K-means segment profiles and A/B-style campaign comparisons, using bootstrap confidence intervals and explicit non-causal framing to keep business recommendations defensible.
 ```
 
 ## Industrial AI / Tata Steel Version
@@ -68,7 +71,7 @@ analytics, or Tata Steel-type roles.
 
 ```text
 - Built a production-style analytics workflow for industrial-commercial decision support, converting noisy transaction streams into cleaned KPIs, forecasts, segment profiles, and dashboard-ready outputs.
-- Implemented interpretable forecasting and clustering modules for category-level planning, comparing baseline models and surfacing high-value, campaign-responsive, and low-volume groups for business review.
+- Implemented interpretable forecasting and clustering modules for category-level planning, comparing six baseline models and surfacing high-value, stable core, campaign-responsive, and low-volume groups for business review.
 - Designed stakeholder-facing reporting with a claim ledger, limitations section, and reproducible pipeline so outputs can be audited rather than treated as black-box predictions.
 ```
 
@@ -78,7 +81,7 @@ Best when applying to ML Engineer or Applied ML roles where code quality matters
 
 ```text
 - Rebuilt the project as a reproducible Python package with modular components for data generation, cleaning, feature engineering, forecasting, clustering, A/B-style analysis, visualization, and reporting.
-- Implemented model evaluation pipelines for regression forecasting and category segmentation, generating versioned tables, SVG figures, reports, and dashboard artifacts from a single command.
+- Implemented model evaluation pipelines for regression forecasting and category segmentation, generating versioned metrics CSVs, SVG figures, reports, and dashboard artifacts from a single command.
 - Added documentation for methodology, limitations, data dictionary, interview explanation, and claim risk so the public repo can be reviewed and defended end to end.
 ```
 
@@ -116,8 +119,8 @@ defend them in an interview.
 | Public repo scale | "Public reproducible sample run uses 25,000 synthetic transactions across 57 categories" |
 | Business output | "Executive-facing dashboard reporting" |
 | Campaign analysis | "A/B-style comparison with non-causal limitations" |
-| Forecasting | "Compared interpretable forecasting baselines" |
-| Segmentation | "Built K-means segment profiles for category-level planning" |
+| Forecasting | "Compared six forecasting baselines with chronological train/validation/test splits" |
+| Segmentation | "Built 4-cluster K-means segment profiles for category-level planning" |
 
 ## Which Three Bullets To Pick By Role
 
@@ -154,20 +157,22 @@ Limitation to admit:
 What you did:
 
 - Aggregated monthly category-level features.
-- Compared naive, moving-average, linear regression, and ridge regression models.
+- Compared naive, moving-average, linear regression, ridge regression, LightGBM, and ridge-plus-LightGBM residual models.
 - Reported MAE, RMSE, and sMAPE.
 
-Why ridge regression:
+Why linear/ridge plus LightGBM:
 
-- It gives a regularized linear baseline.
-- It is interpretable and less likely to overfit than a plain linear regression baseline.
-- It is reasonable for a business-facing analytics project where explainability matters.
+- Linear regression gives a readable trend/lag baseline.
+- Ridge regression adds regularization when features are correlated.
+- LightGBM adds a nonlinear tabular baseline.
+- The residual variant tests whether LightGBM can improve what ridge misses.
+- In the current final-test run, linear regression wins; the repo documents that instead of overstating the tree model.
 
 Alternatives:
 
 - ARIMA/SARIMA for classical time series.
 - Prophet for business forecasting.
-- LightGBM/XGBoost for stronger tabular forecasting.
+- XGBoost/CatBoost for additional nonlinear tabular forecasting.
 - LSTM/Temporal Fusion Transformer if there is enough real sequential data.
 
 Why not use these first:
@@ -180,7 +185,7 @@ Why not use these first:
 What you did:
 
 - Built K-means category segmentation using commercial features.
-- Selected 3 clusters in the sample run using silhouette score.
+- Selected 4 business-readable clusters and reported the silhouette score.
 - Produced segment labels that are readable by business stakeholders.
 - Added campaign comparison with bootstrap confidence intervals.
 
@@ -206,10 +211,10 @@ Limitation to admit:
 Use this entry when you have room for a project title and three bullets.
 
 ```text
-Pharma Commercial Analytics | Python, SQL, pandas, scikit-learn, forecasting, K-means, dashboard reporting
+Pharma Commercial Analytics | Python, SQL, pandas, LightGBM, forecasting, K-means, dashboard reporting
 - Built a reproducible pharma commercial analytics workflow covering transaction cleaning, SQL-style KPI analysis, forecasting, category segmentation, campaign comparison, and executive dashboard reporting.
-- Implemented leakage-aware forecasting baselines across 57 drug categories, comparing naive, moving-average, linear regression, and ridge regression models; ridge achieved the best sample-run RMSE of 8,538.73.
-- Designed K-means category segmentation and campaign comparison modules, separating categories into high-value growing, campaign-responsive, and niche low-volume groups while documenting non-causal limitations with bootstrap confidence intervals.
+- Compared six forecasting baselines across 57 drug categories using chronological train/validation/test splits; the best final-test model reduced RMSE by 20.06% versus the naive baseline.
+- Designed four business-readable K-means category segments and campaign comparison modules, separating high-value growing, stable core, campaign-responsive, and low-volume niche groups while documenting non-causal limitations with bootstrap confidence intervals.
 ```
 
 ## Best One-Line Version
@@ -217,7 +222,7 @@ Pharma Commercial Analytics | Python, SQL, pandas, scikit-learn, forecasting, K-
 Use this when the project gets only one bullet in a crowded resume.
 
 ```text
-- Built a reproducible pharma commercial analytics workflow with SQL-style KPIs, forecasting baselines, K-means segmentation, A/B-style comparison, and executive dashboard reporting across 57 pharma-style categories.
+- Built a reproducible pharma commercial analytics workflow with SQL-style KPIs, six forecasting baselines, 4-cluster K-means segmentation, A/B-style comparison, and executive dashboard reporting across 57 pharma-style categories.
 ```
 
 ## Why These Are The Best Three Points

@@ -6,7 +6,7 @@ I rebuilt a pharma commercial analytics workflow around transaction-style sales 
 
 ## 60-Second Explanation
 
-The project starts with transaction data containing category, region, channel, customer segment, units, price, discount, and campaign fields. I clean the data, create derived metrics like net sales and average selling price, then aggregate it into monthly category-level features. For forecasting, I compare simple baselines with linear and ridge regression using time-based holdout validation. For segmentation, I use K-means to group categories by revenue, volume, discount behavior, campaign share, growth, and volatility. Finally, I run A/B-style campaign comparison and generate dashboard-style SVG outputs.
+The project starts with transaction data containing category, region, channel, customer segment, units, price, discount, and campaign fields. I clean the data, create derived metrics like net sales and average selling price, then aggregate it into monthly category-level features. For forecasting, I compare naive, moving-average, linear, ridge, LightGBM, and ridge-plus-LightGBM residual baselines using chronological train/validation/test splits. For segmentation, I use K-means to group categories by revenue, volume, discount behavior, campaign share, growth, and volatility. Finally, I run A/B-style campaign comparison and generate dashboard-style SVG outputs.
 
 ## Why This Project Is Useful
 
@@ -32,7 +32,7 @@ The goal of the public repo is to demonstrate the workflow safely. Commercial ph
 
 ## Why Linear and Ridge Regression
 
-Linear regression is a readable baseline. Ridge regression adds regularization, which helps when features are correlated. I used these because the project is business-facing and interpretability matters more than model complexity.
+Linear regression is a readable baseline. Ridge regression adds regularization, which helps when features are correlated. I also added LightGBM and a ridge-plus-LightGBM residual model as stronger nonlinear checks. The important point is that I kept the claim honest: in the current chronological test split, linear regression wins on RMSE.
 
 Alternatives:
 
@@ -43,7 +43,7 @@ Alternatives:
 
 ## Why K-Means
 
-K-means is simple and explainable. It helps group drug categories into business-readable segments such as high-value growing, campaign-responsive, or niche low-volume categories.
+K-means is simple and explainable. It helps group drug categories into business-readable segments: high-value growing, stable core, campaign-responsive, and low-volume niche.
 
 Alternatives:
 
@@ -73,4 +73,3 @@ I would add real anonymized aggregates, stronger time-series baselines, dashboar
 ### Why not use a more advanced model?
 
 Because the goal was commercial analytics, not model showmanship. For this kind of project, simple interpretable baselines are often more useful and easier to defend.
-
