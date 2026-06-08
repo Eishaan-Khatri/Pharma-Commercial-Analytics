@@ -1,58 +1,72 @@
 # Claim Ledger
 
-This file separates what is confirmed from what is reconstructed.
+This file keeps the project honest.
 
-## Confirmed From Portfolio/CV Evidence
+It answers one simple question:
+
+> What can I safely say about this project, and what should I not say?
+
+## What Came From The Older Project Notes
 
 | Claim | Status |
 |---|---|
-| Project title: Pharma Commercial Analytics | Confirmed |
-| Dataset scale: 600K+ pharma transactions | Confirmed from portfolio/CV text |
-| Category scale: 57 drug categories | Confirmed from portfolio/CV text |
-| Methods: forecasting, segmentation, A/B-style analysis | Confirmed from portfolio/CV text |
-| Models: linear/ridge regression, K-means clustering | Confirmed from portfolio/CV text |
-| Tools: Python, R, SQL, Tableau/Power BI | Confirmed from portfolio/CV text |
+| Project name: Pharma Commercial Analytics | safe |
+| Older project note mentioned 600K+ transactions | safe if worded as "older project note mentioned" |
+| Older project note mentioned 57 drug categories | safe |
+| Methods included forecasting, segmentation, and campaign-style comparison | safe |
+| Tools included Python, R, SQL, Tableau/Power BI | safe if talking about the original broader work |
 
-## Reconstructed In This Public Repo
+## What This Public Repo Proves
 
-| Item | Status |
+| Item | What The Repo Shows |
 |---|---|
-| Synthetic transaction data generator | Rebuilt for public reproducibility |
-| SQL schema and business queries | Rebuilt from the documented project scope |
-| Forecasting code | Rebuilt with chronological train/validation/test split and baseline comparisons |
-| LightGBM forecasting baseline | Added in public rebuild and evaluated, but not the best final-test model |
-| Ridge + LightGBM residual baseline | Added in public rebuild and evaluated, but not the best final-test model |
-| Segmentation code | Rebuilt with 4 business-readable K-means profiles |
-| A/B-style comparison code | Rebuilt as non-causal comparison analysis |
-| Dashboard-style screenshots | Rebuilt from synthetic sample outputs |
-| `outputs/metrics/` evidence layer | Added for exact CSV support behind resume claims |
+| Generated sample data | 25,000 rows with pharma-style sales columns |
+| Cleaning | duplicate checks, date parsing, numeric checks, derived fields |
+| Forecasting | six model baselines with a time-based split |
+| LightGBM | tested, but not the winning final-test model |
+| Segmentation | 4 K-means groups with readable labels |
+| Campaign comparison | comparison with a bootstrap range, not causal proof |
+| Dashboard output | SVG dashboard files anyone can open |
+| Resume evidence | exact CSVs under `outputs/metrics/` |
 
-## Current Public Sample Metrics
+## Current Public Metrics
 
-| Metric | Value | Source |
+| Metric | Value | File |
 |---|---:|---|
-| Public sample rows | 25,000 | `outputs/metrics/run_summary.csv` |
+| Rows | 25,000 | `outputs/metrics/run_summary.csv` |
 | Drug categories | 57 | `outputs/metrics/run_summary.csv` |
 | Regions | 5 | `outputs/metrics/run_summary.csv` |
 | Channels | 5 | `outputs/metrics/run_summary.csv` |
 | Monthly category rows | 1,354 | `outputs/metrics/run_summary.csv` |
-| Best final-test forecasting model | linear_regression | `outputs/metrics/forecast_model_metrics.csv` |
+| Best final-test model | linear_regression | `outputs/metrics/forecast_model_metrics.csv` |
 | Naive RMSE | 18,373.13 | `outputs/metrics/run_summary.csv` |
 | Best RMSE | 14,687.75 | `outputs/metrics/run_summary.csv` |
-| Improvement over naive | 20.06% | `outputs/metrics/run_summary.csv` |
-| Business-selected K-means clusters | 4 | `outputs/metrics/run_summary.csv` |
+| RMSE drop vs naive | 20.06% | `outputs/metrics/run_summary.csv` |
+| Category segments | 4 | `outputs/metrics/run_summary.csv` |
 | 4-cluster silhouette | 0.4036 | `outputs/metrics/run_summary.csv` |
 
-## Claims To Avoid
+## Safe Way To Describe It
 
-- Do not claim clinical or patient-level analysis.
-- Do not claim causal campaign impact.
-- Do not claim production deployment.
-- Do not claim revenue improvement.
-- Do not claim the generated sample results are real business results.
-- Do not lead with high model accuracy; the project is about analytics workflow quality.
-- Do not say LightGBM was the best model in the current sample run; it was implemented and evaluated, but linear regression won on final-test RMSE.
+Use:
 
-## Safe Public Summary
+> A pharma-style commercial analytics project using generated transaction data, with cleaning, KPI checks, forecasting, segmentation, campaign comparison, and dashboard reporting.
 
-> Rebuilt a pharma commercial analytics workflow using SQL, Python/R-style analysis, leakage-aware forecasting, segmentation, A/B-style comparison, and dashboard reporting over transaction-style sales data. The public repository uses synthetic sample data to demonstrate the original workflow safely, with exact resume-supporting metrics stored under `outputs/metrics/`.
+## Don't Say These
+
+Don't claim:
+
+- real pharma revenue impact,
+- patient-level data,
+- clinical insight,
+- live company deployment,
+- campaign lift,
+- LightGBM as the best model,
+- company outcomes from the generated sample data.
+
+## Why This Matters
+
+Recruiters can forgive synthetic data.
+
+They won't forgive fake certainty.
+
+This repo is stronger when the claims are careful.

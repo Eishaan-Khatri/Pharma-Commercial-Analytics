@@ -1,75 +1,99 @@
 # Interview Guide
 
-## 30-Second Explanation
+Use this when someone asks, "What is this project?"
 
-I rebuilt a pharma commercial analytics workflow around transaction-style sales data. The project covers cleaning, SQL-style KPI analysis, forecasting, category segmentation, campaign comparison, and dashboard reporting. The public repo uses synthetic data so the workflow is reproducible without exposing private commercial data.
+## 20-Second Version
 
-## 60-Second Explanation
+I rebuilt a pharma commercial analytics project using generated transaction-style data. It covers cleaning, sales KPIs, forecasting, category segmentation, campaign comparison, and dashboard reporting. The main point is to show a clean data-to-dashboard workflow without pretending the public sample data is real business data.
 
-The project starts with transaction data containing category, region, channel, customer segment, units, price, discount, and campaign fields. I clean the data, create derived metrics like net sales and average selling price, then aggregate it into monthly category-level features. For forecasting, I compare naive, moving-average, linear, ridge, LightGBM, and ridge-plus-LightGBM residual baselines using chronological train/validation/test splits. For segmentation, I use K-means to group categories by revenue, volume, discount behavior, campaign share, growth, and volatility. Finally, I run A/B-style campaign comparison and generate dashboard-style SVG outputs.
+## 60-Second Version
 
-## Why This Project Is Useful
+This project starts with sales-style rows: category, region, channel, customer segment, units, price, discount, and campaign flag.
 
-It shows that I can handle a business analytics workflow end to end:
+I clean the rows, create monthly category features, and then compare six forecast models. The split is based on time, so the model trains on older months and tests on later months. The best model in this run is linear regression, with a 20.06% RMSE drop compared with the naive last-period baseline.
 
-- data cleaning,
-- SQL-style thinking,
-- feature engineering,
-- forecasting,
-- clustering,
-- cautious statistical comparison,
-- dashboard communication.
+After that, I use K-means to group categories into four readable segments: high-value growing, stable core, campaign-responsive, and low-volume niche. I also compare campaign and non-campaign rows, but I clearly mark it as comparison-only, not causal proof.
 
-## Why Synthetic Data Is Acceptable Here
+## What Was My Main Work?
 
-The goal of the public repo is to demonstrate the workflow safely. Commercial pharma data may be private, so the correct public approach is to publish:
+I built the full workflow:
 
-- schema,
-- synthetic sample data,
-- reproducible code,
-- generated reports,
-- limitations.
+- data generator,
+- cleaning logic,
+- monthly features,
+- forecast comparison,
+- K-means segmentation,
+- campaign comparison,
+- reports,
+- dashboard SVGs,
+- claim ledger,
+- CV bullet bank.
 
-## Why Linear and Ridge Regression
+## Why Use Generated Data?
 
-Linear regression is a readable baseline. Ridge regression adds regularization, which helps when features are correlated. I also added LightGBM and a ridge-plus-LightGBM residual model as stronger nonlinear checks. The important point is that I kept the claim honest: in the current chronological test split, linear regression wins on RMSE.
+Because the public repo should be safe to share.
 
-Alternatives:
+The older project referred to larger pharma sales data, but the raw files aren't here. Instead of pretending, I rebuilt the workflow with generated data and tied every claim to a file.
 
-- ARIMA/SARIMA for classical time-series forecasting,
-- XGBoost/LightGBM for nonlinear tabular forecasting,
-- Prophet-style models for trend and seasonality,
-- neural networks only if there is much more historical data.
+That's more honest.
 
-## Why K-Means
+## Why Did A Simple Model Win?
 
-K-means is simple and explainable. It helps group drug categories into business-readable segments: high-value growing, stable core, campaign-responsive, and low-volume niche.
+Because the final test block favored the linear trend and lag features.
 
-Alternatives:
+I did test LightGBM. It just didn't win here.
 
-- hierarchical clustering for visual grouping,
-- Gaussian mixture models for soft clusters,
-- DBSCAN for irregular clusters,
-- business-rule segmentation when interpretability is the priority.
+That can happen. A stronger model is not always the better model, especially when the dataset is small and the time pattern is simple.
 
-## Why A/B-Style, Not A/B Testing
+## How Did You Avoid Forecast Leakage?
 
-True A/B testing needs randomized assignment. This project compares campaign and non-campaign groups, but it does not claim causality. That is why I call it A/B-style or campaign comparison analysis.
+I didn't randomly mix old and future months.
 
-## Questions I Can Answer
+The split is:
 
-### What was your main contribution?
+- train on older months,
+- validate on the next block,
+- test on the final months.
 
-I designed the full analytics workflow: data schema, cleaning logic, feature engineering, forecasting, segmentation, campaign comparison, reports, and dashboard-style outputs.
+So the model doesn't get to learn from the future.
 
-### What is the biggest limitation?
+## Why K-Means?
 
-The public data is synthetic. It proves workflow and code quality, not real pharma business impact.
+K-means is easy to explain.
 
-### What would you improve next?
+For a business analytics project, that's useful. A manager can understand:
 
-I would add real anonymized aggregates, stronger time-series baselines, dashboard interactivity, and better causal methods if randomized campaign data were available.
+- this group is high-value and growing,
+- this one is stable,
+- this one reacts more to campaigns,
+- this one is small and niche.
 
-### Why not use a more advanced model?
+If this were a real company project, a domain expert would still review the groups.
 
-Because the goal was commercial analytics, not model showmanship. For this kind of project, simple interpretable baselines are often more useful and easier to defend.
+## Why Not Claim Campaign Lift?
+
+Because this isn't a real randomized A/B test.
+
+Campaign rows can differ for many reasons: discounts, channels, timing, product mix, or region mix. So I compare the groups and show a bootstrap range, but I don't say the campaign caused the gap.
+
+## Biggest Limitation
+
+The public data is generated.
+
+So the repo proves project structure and code quality, not real pharma business impact.
+
+## Best Resume Claim
+
+```text
+Built a pharma-style commercial analytics project over 25,000 generated transaction-style rows across 57 categories, covering KPI checks, chronological forecasting tests, K-means segmentation, campaign comparison, and dashboard reporting.
+```
+
+## What I'd Improve Next
+
+I'd add:
+
+- real anonymized aggregate data,
+- a live dashboard,
+- ARIMA/SARIMA or Prophet-style time-series baselines,
+- stronger causal testing if randomized campaign data exists,
+- business review for segment labels.

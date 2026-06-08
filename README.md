@@ -1,49 +1,91 @@
 # Pharma Commercial Analytics
 
-Business-facing analytics project for pharma transaction-style data. The workflow covers data cleaning, SQL-style KPI analysis, forecasting, segmentation, A/B-style comparison, and dashboard reporting.
+Sales data can get messy fast.
 
-> Status: rebuilt public version. The original project files were unavailable, so this repository uses synthetic sample data to demonstrate the documented workflow safely.
+You might have thousands of rows, many product groups, discounts, campaigns, regions, and channels. A manager doesn't want to stare at raw CSVs. They want to know:
 
-## What This Project Shows
+- Which categories are doing well?
+- Can we make a rough forecast for the next few months?
+- Which groups of products behave alike?
+- Did campaign rows look different from non-campaign rows?
+- Can someone check the numbers without guessing?
 
-- Transaction-level data cleaning and validation.
-- SQL-style commercial KPI analysis.
-- Forecasting with naive, moving-average, linear regression, ridge regression, LightGBM, and ridge-plus-LightGBM residual baselines.
-- Category segmentation using K-means clustering.
-- A/B-style campaign comparison with clear non-causal limitations.
-- Dashboard-style screenshots for business stakeholders.
+That's what this repo is about.
+
+**Pharma Commercial Analytics** is a rebuilt public version of an older pharma sales analytics project. The old project note mentioned `600K+` transactions across `57` categories. I don't have those raw files here, and I don't want to pretend I do. So this repo uses generated sample data with the same kind of columns and rebuilds the project in a way anyone can run and check.
+
+No patient data.
+No clinical claims.
+No fake revenue-impact story.
+
+Just a clean analytics project.
+
+## What You Can Learn From This Repo
+
+If you're a recruiter, reviewer, or someone checking my work, this repo shows that I can take messy business-style data and turn it into something readable.
+
+It covers:
+
+- cleaning transaction rows,
+- writing SQL-style sales summaries,
+- building monthly category features,
+- testing simple forecasting models,
+- grouping categories into business segments,
+- comparing campaign and non-campaign rows carefully,
+- making dashboard-style outputs,
+- keeping claims tied to actual files.
+
+## Quick Fictional Example
+
+Imagine a fictional sales team at a pharma distributor.
+
+They sell many kinds of products: antibiotics, vitamins, cardiology products, vaccines, and so on. Every day, they get orders from hospitals, retail stores, government buyers, and online channels.
+
+At the end of the month, someone asks:
+
+> "Which categories should we watch next month, and did campaign rows look any different?"
+
+This project is the kind of workflow that helps answer that question. The example is fictional, but the analytics steps are real.
 
 ## Dashboard Preview
 
 ![Executive dashboard](dashboards/screenshots/executive_dashboard.svg)
 
-## Why Synthetic Data Is Used
+The dashboard is generated from the project files. It isn't a polished Power BI clone. It's proof that the pipeline can create readable business outputs from the same tables used in the reports.
 
-The portfolio version of this project referred to `600K+` pharma transactions across `57` drug categories. The original raw files are not included in this rebuilt public repository. To keep the project reproducible without exposing private data, this repo generates synthetic transaction-style sample data with the same kind of schema.
+## Current Sample Run
 
-Do not interpret the generated sample outputs as real pharma business outcomes.
+The checked-in run uses generated public data:
 
-## Repository Structure
+| Item | Value |
+|---|---:|
+| Rows | 25,000 |
+| Drug categories | 57 |
+| Regions | 5 |
+| Channels | 5 |
+| Monthly category rows | 1,354 |
+| Date range | 2024-01-01 to 2025-12-31 |
+| Forecast split | older months train, next block validate, final months test |
+| Best model on final test | linear regression |
+| Naive RMSE | 18,373.13 |
+| Best RMSE | 14,687.75 |
+| RMSE drop vs naive | 20.06% |
+| Category segments | 4 |
+| 4-cluster silhouette | 0.4036 |
+
+One important detail: I tested LightGBM too. It did **not** win on this final test split. The repo says that openly because the point is to be honest, not to force a fancier model into the headline.
+
+## What The Pipeline Does
 
 ```text
-Pharma-Commercial-Analytics/
-  index.html             GitHub Pages project website
-  assets/                Website CSS and JS
-  data/                  Sample data notes and generated CSVs
-  dashboards/            Generated dashboard-style screenshots and dashboard views
-  docs/                  Data dictionary, methodology, limitations, learning guide
-  notebooks/             Lightweight notebook entry points
-  outputs/               Generated tables and figures
-  reports/               Generated markdown reports
-  sql/                   Schema and business queries
-  src/                   Reproducible Python pipeline
+generate data
+  -> clean rows
+  -> build monthly category features
+  -> forecast sales
+  -> segment categories
+  -> compare campaign rows
+  -> make charts, reports, and dashboard views
 ```
-
-## Project Website
-
-This repo includes a GitHub Pages-ready case study site at `index.html`.
-
-After pushing the repository, enable GitHub Pages from the `main` branch and `/root` folder. See `GITHUB_PAGES.md`.
 
 ## How To Run
 
@@ -54,90 +96,56 @@ pip install -r requirements.txt
 python -m src.run_pipeline --rows 25000 --force
 ```
 
-The run creates:
+That command rebuilds the sample data, outputs, reports, and dashboard files.
 
-- `data/sample/pharma_transactions_sample.csv`
-- `data/sample/pharma_transactions_clean.csv`
-- `outputs/tables/forecast_model_metrics.csv`
-- `outputs/tables/forecast_split_summary.csv`
-- `outputs/tables/category_segments.csv`
-- `outputs/tables/ab_style_inference.csv`
-- `outputs/metrics/*.csv`
-- `outputs/figures/*.svg`
-- `dashboards/screenshots/executive_dashboard.svg`
+## Main Files To Check
+
+| File | What It's For |
+|---|---|
+| `src/run_pipeline.py` | Runs the whole project |
+| `src/forecasting.py` | Forecast model comparison |
+| `src/segmentation.py` | K-means category grouping |
+| `src/ab_analysis.py` | Campaign vs non-campaign comparison |
+| `outputs/metrics/run_summary.csv` | Main numbers used for resume claims |
+| `outputs/metrics/forecast_model_metrics.csv` | Forecast model results |
+| `outputs/metrics/forecast_split_summary.csv` | Train/validation/test split |
+| `outputs/tables/segment_profiles.csv` | Category segment labels |
+| `dashboards/screenshots/executive_dashboard.svg` | Main dashboard output |
+| `docs/CLAIM_LEDGER.md` | What can and can't be claimed |
+| `docs/CV_BULLET_BANK.md` | Resume bullets backed by this repo |
+
+## Methods Used
+
+| Step | Tool / Method | Plain-English Reason |
+|---|---|---|
+| Cleaning | pandas | Good for fixing CSV-style tables |
+| SQL summaries | SQL files + pandas checks | Sales data often lives in tables |
+| Forecasting | naive, moving average, linear, ridge, LightGBM, ridge + LightGBM residual | Compare simple and stronger baselines without hiding the loser |
+| Segmentation | K-means | Easy way to group similar categories |
+| Campaign comparison | mean difference + bootstrap interval | Shows the gap without pretending we proved cause and effect |
+| Dashboard | generated SVGs | Easy to view on GitHub Pages |
+
+## Dashboard Views
+
 - `dashboards/screenshots/executive_summary.svg`
 - `dashboards/screenshots/category_view.svg`
 - `dashboards/screenshots/forecast_view.svg`
 - `dashboards/screenshots/segment_view.svg`
 - `dashboards/screenshots/campaign_comparison_view.svg`
-- `reports/final_report.md`
-
-## Main Methods
-
-| Task | Method Used | Why |
-|---|---|---|
-| Data cleaning | pandas validation and derived features | Flexible and readable for tabular data |
-| KPI analysis | SQL + pandas aggregations | Mirrors business analytics workflows |
-| Forecasting | naive, moving average, linear regression, ridge regression, LightGBM, ridge + LightGBM residual | Interpretable and nonlinear baselines with leakage-aware chronological splits |
-| Segmentation | K-means clustering | Simple, explainable grouping for commercial categories |
-| A/B-style analysis | group comparison + bootstrap CI | Quantifies differences without pretending causal proof |
-| Dashboarding | dependency-light SVG dashboard figures and dashboard views | Makes outputs visible in a public repo |
-
-Note: the current rebuilt version generates SVG dashboard-style figures directly from Python, so the project does not require heavy plotting dependencies.
-
-## Current Sample Run
-
-The checked-in sample run was generated with:
-
-```powershell
-python -m src.run_pipeline --rows 25000 --force
-```
-
-Summary:
-
-| Output | Value |
-|---|---|
-| Generated sample rows | 25,000 |
-| Drug categories | 57 |
-| Regions | 5 |
-| Channels | 5 |
-| Monthly category rows | 1,354 |
-| Date range | 2024-01-01 to 2025-12-31 |
-| Forecast split | Train older months, validate next block, test final months |
-| Best forecast model in sample run | Linear regression |
-| Naive RMSE in sample run | 18,373.13 |
-| Best RMSE in sample run | 14,687.75 |
-| Best improvement over naive | 20.06% |
-| Business-selected K-means clusters | 4 |
-| K-means silhouette for 4 clusters | 0.4036 |
-
-Key generated files:
-
-- `reports/final_report.md`
-- `reports/forecasting_results.md`
-- `reports/segment_profiles.md`
-- `reports/ab_style_analysis.md`
-- `outputs/tables/forecast_model_metrics.csv`
-- `outputs/metrics/run_summary.csv`
-- `outputs/tables/segment_profiles.csv`
-- `dashboards/screenshots/executive_dashboard.svg`
-
-## Learning Guide
-
-For step-by-step explanation of what is used, why it is used, and what alternatives exist, read:
-
-- `docs/LEARNING_GUIDE.md`
-- `docs/METHODOLOGY.md`
-- `docs/LIMITATIONS.md`
-- `docs/INTERVIEW_GUIDE.md`
 
 ## Safe CV Summary
 
-Built a pharma commercial analytics workflow over 25,000 transaction-style rows across 57 categories, covering data cleaning, KPI analysis, leakage-aware forecasting, K-means segmentation, A/B-style campaign comparison, and dashboard reporting using Python, SQL, regression, LightGBM, and business-facing SVG/BI-style outputs.
+Built a pharma-style commercial analytics project over 25,000 generated transaction-style rows across 57 categories, covering KPI checks, chronological forecasting tests, K-means segmentation, campaign comparison, and dashboard reporting.
 
-## Important Limitations
+## What Not To Claim
 
-- Public sample data is synthetic.
-- Campaign comparison is not causal inference.
-- No clinical, patient-level, or drug efficacy claims are made.
-- This is a commercial analytics project, not a medical AI system.
+Don't claim:
+
+- real pharma revenue impact,
+- live company deployment,
+- patient-level data analysis,
+- clinical insight,
+- campaign lift,
+- LightGBM as the winning model.
+
+This is public proof of analytics structure and code quality, not a real company case study.

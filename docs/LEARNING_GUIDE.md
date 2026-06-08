@@ -1,173 +1,163 @@
 # Learning Guide
 
-This guide explains what each part of the project does, why it is used, and what alternatives exist.
+This guide explains the project like we're walking through it together.
 
-## Big Picture
+No heavy theory first. Just the story.
 
-This is a commercial analytics project. The goal is not to build the most complex model. The goal is to show a complete business data workflow:
+## The Big Idea
 
-1. collect or simulate transaction data,
-2. clean it,
-3. create business metrics,
-4. forecast trends,
-5. segment categories,
-6. compare campaign-like groups,
-7. turn results into dashboards.
+A company has sales rows.
 
-A recruiter should see that you can move from messy data to decision-ready output.
+Each row says something like:
 
-## Why SQL Is Used
+> "This product category sold this many units, in this region, through this channel, with this discount."
 
-SQL is used because transaction data usually lives in databases. Even if Python can do the same aggregation, SQL proves you understand business data systems.
+One row is not very useful.
 
-Used for:
+Thousands of rows can be useful if we clean them and ask good questions.
 
-- grouping by month/category,
-- calculating KPIs,
-- comparing campaign and non-campaign groups,
-- preparing dashboard tables.
+That's what **Pharma Commercial Analytics** does.
 
-Alternatives:
+## Step 1: Make The Data
 
-- pandas for local analysis,
-- DuckDB for file-based SQL analytics,
-- Spark SQL for very large data,
-- BigQuery/Snowflake/Redshift in production.
+The repo creates generated sample data.
 
-## Why pandas Is Used
+Why not use real data? Because the old raw files aren't here, and pharma-style commercial data can be private.
 
-pandas is the main Python library for tabular data. It is used for cleaning, joining, grouping, and feature creation.
+The generated rows include:
 
-Used for:
-
-- loading CSVs,
-- cleaning columns,
-- deriving revenue metrics,
-- aggregating monthly data,
-- preparing model inputs.
-
-Alternatives:
-
-- Polars for faster local analytics,
-- Spark for distributed data,
-- SQL if analysis stays inside a database.
-
-## Why Linear Regression Is Used
-
-Linear regression predicts a numeric target by learning a weighted sum of features.
-
-In this project:
-
-- target = monthly net sales,
-- features = lags, rolling averages, month, category, discount, transaction count.
-
-Why useful:
-
-- easy to explain,
-- good baseline,
-- shows feature importance direction,
-- less likely to look like model overkill.
-
-Alternatives:
-
-- ARIMA/SARIMA for classical time series,
-- LightGBM/XGBoost for nonlinear tabular forecasting,
-- neural networks for larger and richer sequences.
-
-## Why Ridge Regression Is Used
-
-Ridge regression is linear regression with regularization. It penalizes very large coefficients.
-
-Why useful:
-
-- handles many correlated features better,
-- reduces overfitting,
-- still interpretable enough for business settings.
-
-Alternative:
-
-- Lasso regression if you want feature selection,
-- Elastic Net if you want both ridge and lasso behavior.
-
-## Why K-Means Is Used
-
-K-means groups similar categories into clusters.
-
-In this project, categories are clustered using:
-
-- revenue,
+- category,
+- region,
+- channel,
 - units,
-- transaction frequency,
-- discount rate,
+- price,
+- discount,
+- campaign flag,
+- net sales.
+
+This lets anyone run the project without needing private files.
+
+## Step 2: Clean The Rows
+
+Cleaning means checking that the data makes sense.
+
+For example:
+
+- dates should be real dates,
+- sales should not be negative,
+- transaction IDs should not repeat,
+- numbers should be numbers,
+- month and quarter fields should be created cleanly.
+
+This is boring work.
+
+It's also the part that keeps the rest of the project from falling apart.
+
+## Step 3: Build KPIs
+
+KPIs are just useful business numbers.
+
+In this project, examples include:
+
+- total sales,
+- units sold,
+- average discount,
+- sales by category,
+- sales by region,
+- sales by channel.
+
+Think of KPIs like a scoreboard. They don't explain everything, but they tell you where to look.
+
+## Step 4: Forecast Sales
+
+Forecasting means making a rough guess about future sales.
+
+This project compares:
+
+- last month's value,
+- 3-month average,
+- linear regression,
+- ridge regression,
+- LightGBM,
+- ridge + LightGBM residual model.
+
+The important trick is the time split.
+
+The model trains on older months and tests on later months. That way it doesn't cheat by seeing the future.
+
+In this run, linear regression wins. LightGBM was tested but didn't win.
+
+That's a useful lesson: fancy doesn't always mean better.
+
+## Step 5: Group Categories
+
+K-means groups categories that behave in a similar way.
+
+The project uses features like:
+
+- sales,
 - growth,
 - volatility,
+- discount rate,
 - campaign share.
 
-Why useful:
+The final groups are:
 
-- simple,
-- fast,
-- easy to show in dashboards,
-- produces business-friendly groupings.
+- high-value growing,
+- stable core,
+- campaign-responsive,
+- low-volume niche.
 
-Alternatives:
+These names are meant to be readable. A business person should understand them without reading the code.
 
-- hierarchical clustering for tree-like grouping,
-- DBSCAN for irregular clusters,
-- Gaussian mixture models for softer membership,
-- rule-based segmentation when business logic matters more.
+## Step 6: Compare Campaign Rows
 
-## Why A/B-Style Analysis Is Used Carefully
+The project compares campaign rows with non-campaign rows.
 
-The portfolio mentioned A/B testing. In a public rebuild, the honest wording is A/B-style analysis unless random assignment is documented.
+But here's the honest part:
 
-The project compares campaign and non-campaign groups, but it does not claim the campaign caused the difference.
+This is not proof that the campaign caused the difference.
 
-Alternatives:
+For a real causal answer, we'd need random assignment or a better causal setup.
 
-- randomized A/B test,
-- difference-in-differences,
-- propensity score matching,
-- causal forests,
-- uplift modeling.
+Here, we only say:
 
-Those are stronger methods, but they require stronger assumptions and better data.
+> "These two groups looked different in this sample."
 
-## Why Dashboards Are Important
+## Step 7: Make Outputs People Can Check
 
-Most analytics work is not useful unless a decision-maker can understand it.
+The project creates:
 
-Dashboards convert:
+- CSV tables,
+- metrics files,
+- reports,
+- charts,
+- dashboard SVGs.
 
-- model results,
-- KPI tables,
-- forecast errors,
-- cluster profiles,
-- campaign comparisons,
+This matters because a good project should not hide all the proof inside a notebook.
 
-into visible business summaries.
+## Small Fictional Example
 
-Alternatives:
+Imagine a fictional analyst named Arjun.
 
-- Tableau,
-- Power BI,
-- Streamlit,
-- Plotly Dash,
-- static HTML reports,
-- PDF reports.
+His manager asks:
 
-## How To Explain This Project In An Interview
+> "Why are some categories moving differently from others?"
 
-Use this structure:
+Arjun doesn't start by showing model code. He opens the segment view and says:
 
-> I rebuilt a pharma commercial analytics workflow around transaction-style sales data. The project covers cleaning, SQL-style aggregation, forecasting, category segmentation, campaign comparison, and dashboard reporting. I used simple interpretable models because the goal was not SOTA modeling; it was to create a business-readable analytics pipeline and avoid overclaiming.
+> "These categories are high-value and growing. These ones are stable. These ones look more campaign-heavy. Let's inspect them separately."
 
-## What Makes The Project Good
+That's the kind of practical thinking this repo tries to show.
 
-- It is end-to-end.
-- It includes SQL and Python.
-- It has models and dashboards.
-- It explains limitations.
-- It avoids fake business impact claims.
-- It is aligned with real analytics roles.
+## What To Say In An Interview
 
+Say this:
+
+> I rebuilt a pharma commercial analytics workflow with generated transaction-style data. It covers cleaning, KPI analysis, forecasting, category segmentation, campaign comparison, and dashboard reporting. I kept the claims conservative because the public data is synthetic.
+
+Don't say this:
+
+> I built a real pharma revenue optimization system.
+
+That would be too much.

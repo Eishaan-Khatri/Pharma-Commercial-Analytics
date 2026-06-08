@@ -6,7 +6,7 @@
     <title>Pharma Commercial Analytics | Eishaan Khatri</title>
     <meta
       name="description"
-      content="My rebuilt pharma commercial analytics project with SQL summaries, forecasting, segmentation, campaign comparison, and dashboard output."
+      content="A rebuilt pharma-style sales analytics project with cleaning, forecasts, category groups, campaign comparison, and dashboard files."
     />
     <link rel="stylesheet" href="assets/site.css?v=20260524" />
   </head>
@@ -52,19 +52,19 @@
               </div>
 
               <p class="kicker">Project brief</p>
-              <h1>Pharma analytics you can check.</h1>
+              <h1>Sales data, cleaned up and explained.</h1>
               <p class="deck">
-                I cleaned transaction-style data, wrote sales summaries, built simple forecasts,
-                grouped categories, compared campaign rows, and turned the results into files,
-                charts, and a dashboard.
+                Pharma Commercial Analytics takes sales-style rows and turns them into something
+                easier to read: KPIs, forecasts, category groups, campaign checks, and dashboard
+                files you can open.
               </p>
 
               <div class="scope-box">
                 <b>What changed</b>
                 <p>
-                  My old project note mentioned 600K+ transactions across 57 drug categories. I do
-                  not have the raw files here now, so I rebuilt a public version with generated
-                  sample data. I keep each claim tied to a file in this repo.
+                  My old project note mentioned 600K+ transactions across 57 categories. I don't
+                  have those raw files here, so I rebuilt a public version with generated data.
+                  Every public claim is tied to a file in this repo.
                 </p>
               </div>
 
@@ -74,8 +74,8 @@
                   <span>cleaning, checks, exports</span>
                 </div>
                 <div>
-                  <b>Modelling</b>
-                  <span>forecasting, segments, intervals</span>
+                  <b>Model checks</b>
+                  <span>forecasts, segments, intervals</span>
                 </div>
                 <div>
                   <b>Business output</b>
@@ -97,7 +97,7 @@
               <dl>
                 <div>
                   <dt>Data</dt>
-                  <dd>Generated sample</dd>
+                  <dd>Generated rows</dd>
                 </div>
                 <div>
                   <dt>Rows</dt>
@@ -130,7 +130,7 @@
               <div class="dashboard-frame__header">
                 <div>
                   <p class="kicker">Dashboard output</p>
-                  <h2>Executive view generated from the pipeline</h2>
+                  <h2>A quick view of the run</h2>
                 </div>
                 <span>SVG / GitHub-ready</span>
               </div>
@@ -150,10 +150,10 @@
           <div class="page-inner">
             <div class="section-heading">
               <p class="kicker">Build</p>
-              <h2>I made the project easy to inspect.</h2>
+              <h2>No mystery notebook.</h2>
               <p>
-                I did not want a repo with one vague notebook. I split the work into data, SQL,
-                code, reports, charts, and notes.
+                A reviewer shouldn't have to guess what happened. I split the work into data,
+                SQL, code, reports, charts, and notes.
               </p>
             </div>
 
@@ -161,22 +161,22 @@
               <article class="build-card accent-teal">
                 <span>01</span>
                 <h3>Generate data</h3>
-                <p>I create rows with category, region, channel, price, discount, and campaign fields.</p>
+                <p>I create safe sample rows with category, region, channel, price, discount, and campaign fields.</p>
               </article>
               <article class="build-card accent-copper">
                 <span>02</span>
                 <h3>Clean rows</h3>
-                <p>I check dates, duplicate rows, bad quantities, missing fields, and sales metrics.</p>
+                <p>I check dates, duplicate IDs, bad quantities, missing fields, and sales numbers.</p>
               </article>
               <article class="build-card accent-green">
                 <span>03</span>
                 <h3>Summarize sales</h3>
-                <p>I make category, region, channel, month, campaign, and customer summaries.</p>
+                <p>I make category, region, channel, month, campaign, and customer-segment summaries.</p>
               </article>
               <article class="build-card accent-red">
                 <span>04</span>
                 <h3>Model carefully</h3>
-                <p>I use lagged values for forecasts, K-means for groups, and bootstrap ranges for comparison.</p>
+                <p>I use past-month values for forecasts, K-means for groups, and bootstrap ranges for comparison.</p>
               </article>
             </div>
           </div>
@@ -186,9 +186,9 @@
           <div class="page-inner">
             <div class="section-heading">
               <p class="kicker">Output</p>
-              <h2>The page shows the actual files, not just claims.</h2>
+              <h2>The files are the proof.</h2>
               <p>
-                These charts and tables come from the run. I added them so the work is fast to judge.
+                These charts and tables come from the run. They're here so the work is quick to check.
               </p>
             </div>
 
@@ -268,7 +268,7 @@
                   </table>
                 </div>
                 <p class="table-note">
-                  I use a chronological train/validation/test split. LightGBM is evaluated, but I do not claim it wins when the final-test CSV says otherwise.
+                  I use older months to train and later months to test. LightGBM was tested, but I don't claim it wins when the CSV says it doesn't.
                 </p>
               </aside>
             </div>
@@ -279,37 +279,37 @@
           <div class="page-inner tools-layout">
             <div>
               <p class="kicker">Tools</p>
-              <h2>I used simple tools because this is a business analytics project.</h2>
+              <h2>Simple tools, clear reasons.</h2>
               <p>
-                The point is not to show a complex model. The point is to show a clean path from
-                rows to numbers to a readable dashboard.
+                This isn't about throwing the fanciest model at the problem. It's about moving
+                from rows to numbers to a dashboard someone can understand.
               </p>
             </div>
 
             <div class="tool-list">
               <div class="tool-row">
                 <b>SQL</b>
-                <span>I use it because sales data usually sits in tables.</span>
+                <span>Sales data usually sits in tables, so SQL belongs here.</span>
               </div>
               <div class="tool-row">
                 <b>pandas</b>
-                <span>I use it to clean rows, group data, make new fields, and export tables.</span>
+                <span>Good for cleaning rows, grouping data, making new fields, and saving tables.</span>
               </div>
               <div class="tool-row">
                 <b>Ridge regression</b>
-                <span>I use it as a simple forecast model that handles related features better than plain linear regression.</span>
+                <span>A steady forecast baseline when features are related to each other.</span>
               </div>
               <div class="tool-row">
                 <b>LightGBM</b>
-                <span>I added it as the stronger tree-based baseline, then kept the final claim honest because it did not beat the simpler models on this test block.</span>
+                <span>A stronger tree-based model. I tested it, but it didn't win on this run.</span>
               </div>
               <div class="tool-row">
                 <b>K-means</b>
-                <span>I use it to group categories into high-value growing, stable core, campaign-responsive, and low-volume niche segments.</span>
+                <span>Groups categories into high-value growing, stable core, campaign-responsive, and low-volume niche.</span>
               </div>
               <div class="tool-row">
                 <b>Bootstrap CI</b>
-                <span>I use it to compare campaign rows without pretending it proves cause and effect.</span>
+                <span>Gives a range for the campaign comparison without pretending it's proof of cause and effect.</span>
               </div>
             </div>
           </div>
@@ -319,25 +319,25 @@
           <div class="page-inner limits__inner">
             <div>
               <p class="kicker">Limits</p>
-              <h2>I say what this is and what it is not.</h2>
+              <h2>What this is, and what it isn't.</h2>
               <p>
-                This is commercial analytics with generated public data. I make no clinical claims,
-                no production claims, and no fake causal claim.
+                This is commercial analytics with generated public data. It is not a clinical
+                project, not a production system, and not proof of campaign lift.
               </p>
             </div>
 
             <div class="limit-grid">
               <article>
                 <b>Data</b>
-                <span>I use generated public data so the repo can be run and checked safely.</span>
+                <span>The data is generated so the repo can be shared and checked safely.</span>
               </article>
               <article>
                 <b>Campaign comparison</b>
-                <span>I treat campaign analysis as comparison-only unless randomization is documented.</span>
+                <span>Campaign rows are compared, but not treated as causal proof.</span>
               </article>
               <article>
                 <b>Domain</b>
-                <span>I make no patient, drug efficacy, safety, or clinical recommendation claims.</span>
+                <span>No patient, drug efficacy, safety, or clinical recommendation claims.</span>
               </article>
             </div>
           </div>
@@ -347,29 +347,28 @@
           <div class="page-inner">
             <div class="section-heading">
               <p class="kicker">Files</p>
-              <h2>The important parts are one click away.</h2>
+              <h2>Start here if you're reviewing it.</h2>
               <p>
-                I want the repo to be easy to check. The code, reports, charts, and notes are linked
-                from here.
+                The code, reports, charts, and notes are linked from here so you don't have to hunt.
               </p>
             </div>
 
             <div class="file-grid">
               <a class="file-card accent-teal" href="src/run_pipeline.py">
                 <b>Pipeline</b>
-                <span>Regenerates data, tables, charts, dashboard, and reports.</span>
+                <span>Rebuilds data, tables, charts, dashboard files, and reports.</span>
               </a>
               <a class="file-card accent-copper" href="reports/final_report.md">
                 <b>Final report</b>
-                <span>Short written summary of the full run.</span>
+                <span>Short summary of the full run.</span>
               </a>
               <a class="file-card accent-green" href="docs/INTERVIEW_GUIDE.md">
                 <b>Interview notes</b>
-                <span>Short answer, longer answer, and limitation answers.</span>
+                <span>How to explain the project without overclaiming.</span>
               </a>
               <a class="file-card accent-red" href="outputs/tables/forecast_model_metrics.csv">
                 <b>Metrics CSV</b>
-                <span>Forecast model comparison.</span>
+                <span>The forecast model comparison numbers.</span>
               </a>
             </div>
           </div>
@@ -378,7 +377,7 @@
 
       <footer class="footer">
         <div class="page-inner">
-          <p>I rebuilt Pharma Commercial Analytics from the old project notes, with clear files and honest limits.</p>
+          <p>I rebuilt Pharma Commercial Analytics from old project notes, with clear files and honest limits.</p>
           <a class="button" href="#brief">Back to top</a>
         </div>
       </footer>

@@ -1,8 +1,21 @@
 # Segment Profiles
 
-| cluster | categories | total_net_sales | avg_order_value | avg_discount_rate | campaign_share | growth_rate | revenue_volatility | segment_label |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 14 | 2825747.743571428 | 4297.332166394235 | 0.1876153784202841 | 0.13847476769561268 | 0.2812619484626495 | 28664.695330580842 | High-value growing |
-| 0 | 26 | 513595.89499999996 | 1215.02601557962 | 0.18793863187931725 | 0.14486175788222244 | 0.08455634370869645 | 5733.765422241446 | Stable core |
-| 2 | 11 | 469649.2518181819 | 1213.3663597196442 | 0.19878348670367857 | 0.2871788642892155 | 0.15552806563074387 | 5657.997618162659 | Campaign-responsive |
-| 3 | 6 | 19481.76 | 249.39613566521734 | 0.18401101810202727 | 0.06259082059313427 | -0.09057682973404964 | 446.7265821520064 | Low-volume niche |
+K-means grouped the 57 categories into four readable groups.
+
+The labels are meant to help a reviewer understand the output quickly. They are not final business truth. A real sales team would still review them.
+
+| Segment | Categories | Avg Sales | Avg Order | Campaign Share | Growth | Volatility |
+|---|---:|---:|---:|---:|---:|---:|
+| High-value growing | 14 | 2,825,747.74 | 4,297.33 | 13.85% | 28.13% | 28,664.70 |
+| Stable core | 26 | 513,595.89 | 1,215.03 | 14.49% | 8.46% | 5,733.77 |
+| Campaign-responsive | 11 | 469,649.25 | 1,213.37 | 28.72% | 15.55% | 5,658.00 |
+| Low-volume niche | 6 | 19,481.76 | 249.40 | 6.26% | -9.06% | 446.73 |
+
+## Plain-English Read
+
+- **High-value growing**: big categories that are still rising.
+- **Stable core**: steady categories that look like the base of the business.
+- **Campaign-responsive**: categories with a higher campaign share.
+- **Low-volume niche**: small categories that should not dominate planning decisions.
+
+Use these groups as a starting point, not a final strategy.

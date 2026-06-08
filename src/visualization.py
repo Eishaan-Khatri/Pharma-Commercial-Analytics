@@ -223,9 +223,9 @@ def _create_executive_summary_view(df, metrics, profiles, ab_inference, path) ->
     <rect x="855" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="873" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best RMSE</text>
     <text x="873" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">{best['RMSE']:,.2f}</text>
-    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">Executive summary</text>
-    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard is generated from synthetic public data and proves the analytics workflow, not real pharma revenue impact.</text>
-    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans transactions, builds monthly category features, forecasts demand, segments categories, and compares campaign rows cautiously.</text>
+    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">What this run shows</text>
+    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard uses generated public data. It checks the analytics build, not real pharma revenue.</text>
+    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans sales rows, forecasts category sales, groups categories, and compares campaign-like rows carefully.</text>
     <text x="40" y="330" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment labels</text>
     """
     y = 366
@@ -237,8 +237,8 @@ def _create_executive_summary_view(df, metrics, profiles, ab_inference, path) ->
         y += 30
     ci = ab_inference.iloc[0]
     body += f"""
-    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison boundary</text>
-    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: {ci['observed_difference']:.2f}; 95% bootstrap CI [{ci['bootstrap_ci_95_low']:.2f}, {ci['bootstrap_ci_95_high']:.2f}]. Comparison only, not causal.</text>
+    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison limit</text>
+    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: {ci['observed_difference']:.2f}; 95% bootstrap CI [{ci['bootstrap_ci_95_low']:.2f}, {ci['bootstrap_ci_95_high']:.2f}]. This is not proof of lift.</text>
     """
     _write_svg(Path(path), 1140, 660, body, "Executive Summary View")
 
@@ -293,10 +293,10 @@ def _create_campaign_view(summary, inference, path) -> None:
     body = _bar_chart(summary["campaign_flag"].tolist(), summary["avg_net_sales"].tolist(), 80, 84, 480, 240, COLORS[3], horizontal=False)
     ci = inference.iloc[0]
     body += f"""
-    <text x="620" y="92" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Causal honesty</text>
+    <text x="620" y="92" font-family="Arial" font-size="15" font-weight="700" fill="#111827">What we can say</text>
     <text x="620" y="130" font-family="Arial" font-size="13" fill="#374151">Observed difference: {float(ci['observed_difference']):.2f}</text>
     <text x="620" y="158" font-family="Arial" font-size="13" fill="#374151">95% bootstrap CI: [{float(ci['bootstrap_ci_95_low']):.2f}, {float(ci['bootstrap_ci_95_high']):.2f}]</text>
-    <text x="620" y="202" font-family="Arial" font-size="13" fill="#374151">This is observational campaign comparison.</text>
-    <text x="620" y="230" font-family="Arial" font-size="13" fill="#374151">It should not be presented as causal lift unless randomized assignment exists.</text>
+    <text x="620" y="202" font-family="Arial" font-size="13" fill="#374151">This compares groups in the sample.</text>
+    <text x="620" y="230" font-family="Arial" font-size="13" fill="#374151">It should not be called campaign lift without random assignment.</text>
     """
     _write_svg(Path(path), 1080, 420, body, "Campaign Comparison View")

@@ -141,33 +141,31 @@ def run(rows: int = 25_000, force: bool = False) -> None:
         REPORTS_DIR / "eda_summary.md",
         "EDA Summary",
         f"""
-Generated sample rows: {len(sample):,}
+This is the basic health check for the generated sample data.
 
-Clean rows used: {len(clean):,}
+- Generated rows: {len(sample):,}
+- Clean rows used: {len(clean):,}
+- Categories: {clean['drug_category'].nunique()}
+- Date range: {clean['transaction_date'].min().date()} to {clean['transaction_date'].max().date()}
+- Total sample net sales: {clean['net_sales'].sum():,.2f}
+- Top sample category by sales: {clean.groupby('drug_category')['net_sales'].sum().idxmax()}
 
-Drug categories: {clean['drug_category'].nunique()}
-
-Date range: {clean['transaction_date'].min().date()} to {clean['transaction_date'].max().date()}
-
-Total net sales in sample: {clean['net_sales'].sum():,.2f}
-
-Top category by sample revenue: {clean.groupby('drug_category')['net_sales'].sum().idxmax()}
+The data is generated, so these numbers are for checking the pipeline. They are not real pharma revenue.
 """,
     )
     write_markdown(
         REPORTS_DIR / "forecasting_results.md",
         "Forecasting Results",
         f"""
-Best sample-run model by RMSE: {best_model['model']}
+The forecasting step asks a simple question: can we predict next-month category sales better than a basic baseline?
 
-MAE: {best_model['MAE']:,.2f}
+The best model in this sample run was `{best_model['model']}`.
 
-RMSE: {best_model['RMSE']:,.2f}
+- MAE: {best_model['MAE']:,.2f}
+- RMSE: {best_model['RMSE']:,.2f}
+- sMAPE: {best_model['sMAPE']:,.2f}%
 
-sMAPE: {best_model['sMAPE']:,.2f}%
-
-Validation design: leakage-aware month-based split. Training uses older months,
-validation uses the next chronological block, and testing uses the final months.
+The split is time-based. Older months are used for training, the next block is used for validation, and the final months are used for testing. That keeps the model from peeking at the future.
 
 ## Split Summary
 
@@ -181,13 +179,21 @@ validation uses the next chronological block, and testing uses the final months.
     write_markdown(
         REPORTS_DIR / "segment_profiles.md",
         "Segment Profiles",
-        df_to_markdown(segment_profiles),
+        f"""
+The segmentation step groups categories that behave in similar ways.
+
+It is not saying these groups are medically meaningful. It is only a business-style grouping based on sales, units, discounts, and channel mix.
+
+{df_to_markdown(segment_profiles)}
+""",
     )
     write_markdown(
         REPORTS_DIR / "ab_style_analysis.md",
-        "A/B-Style Campaign Comparison",
+        "Campaign Comparison",
         f"""
-This is comparison analysis, not causal inference.
+This section compares campaign-like rows with non-campaign rows.
+
+It is not a true A/B test. A real A/B test would need random assignment. Here, the bootstrap interval is only a careful way to show how stable the observed difference is in the sample.
 
 {df_to_markdown(ab_summary)}
 
@@ -198,17 +204,19 @@ This is comparison analysis, not causal inference.
         REPORTS_DIR / "final_report.md",
         "Final Project Report",
         f"""
-This rebuilt project demonstrates a complete pharma commercial analytics workflow using synthetic public sample data.
+This project rebuilds a pharma commercial analytics case study using generated public data.
 
-## Workflow
+The goal is not to pretend these are real company numbers. The goal is to show how the analysis would be built, checked, and explained.
+
+## What The Pipeline Does
 
 1. Generate transaction-style sample data.
-2. Clean and validate transaction fields.
-3. Aggregate SQL-style business metrics.
-4. Forecast month-category revenue.
-5. Segment drug categories using K-means.
-6. Compare campaign and non-campaign groups cautiously.
-7. Generate dashboard-style screenshots and reports.
+2. Clean sales fields and remove unusable rows.
+3. Build monthly and category-level summaries.
+4. Compare forecasting models without using future data.
+5. Group categories with K-means.
+6. Compare campaign-like rows with non-campaign rows, without calling it causal.
+7. Save reports, metric files, and dashboard images.
 
 ## Main Outputs
 
@@ -231,7 +239,7 @@ Best-model improvement over naive: {(naive_rmse - best_rmse) / naive_rmse * 100:
 
 ## Key Limitation
 
-The data in this public repository is synthetic. It shows analytics workflow quality, not real pharma business outcomes.
+The data in this public repository is generated. Use this project as proof of analytics structure and code quality, not as proof of real pharma business impact.
 """,
     )
 

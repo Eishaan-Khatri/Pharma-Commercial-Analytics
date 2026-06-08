@@ -1,72 +1,108 @@
 # Dashboard Guide
 
-The dashboard-style screenshots are generated as SVG files under:
+The dashboard files live here:
 
-- `dashboards/screenshots/`
+```text
+dashboards/screenshots/
+```
 
-They are static images built from the same sample outputs used in the reports.
+They are SVG files, so GitHub can show them easily.
 
-## Executive Overview
+## What The Dashboard Is For
 
-Shows:
+The dashboard is not trying to be a fancy BI product.
 
-- total net sales,
-- total transactions,
-- total units sold,
-- average order value,
-- sales trend over time,
-- top categories.
+It's there so someone can open the repo and quickly see:
 
-Use it to answer:
+- sales trends,
+- top categories,
+- forecast errors,
+- category segments,
+- campaign comparison.
 
-> What is the overall commercial picture?
+That matters because a project shouldn't only work in code. It should also be easy to explain.
 
-## Category Performance
+## Executive Summary
 
-Shows:
+File:
 
-- category revenue ranking,
-- growth,
-- volatility,
-- region/category contribution.
+```text
+dashboards/screenshots/executive_summary.svg
+```
 
-Use it to answer:
+This view answers:
 
-> Which categories are most important and which ones need attention?
+> "What happened overall?"
 
-## Forecasting View
+It shows the main run details, the best forecast model, the segment labels, and the campaign warning.
 
-Shows:
+## Category View
 
-- actual versus predicted sales,
-- model comparison,
-- error by category.
+File:
 
-Use it to answer:
+```text
+dashboards/screenshots/category_view.svg
+```
 
-> Can we estimate near-term sales and where are forecasts weak?
+This view answers:
 
-## Segmentation View
+> "Which product categories matter most?"
 
-Shows:
+It shows the top categories and how the category groups look.
 
-- K-means segment profiles,
-- category counts per segment,
-- segment-level behavior.
+## Forecast View
 
-Use it to answer:
+File:
 
-> Which categories behave similarly and how should they be managed?
+```text
+dashboards/screenshots/forecast_view.svg
+```
+
+This view answers:
+
+> "How close were the forecasts?"
+
+It compares actual sales with the forecast and shows model RMSE values.
+
+## Segment View
+
+File:
+
+```text
+dashboards/screenshots/segment_view.svg
+```
+
+This view answers:
+
+> "Which categories behave alike?"
+
+It shows the four groups:
+
+- high-value growing,
+- stable core,
+- campaign-responsive,
+- low-volume niche.
 
 ## Campaign Comparison View
 
-Shows:
+File:
 
-- campaign versus non-campaign transaction behavior,
-- observed difference,
-- confidence interval,
-- caution note.
+```text
+dashboards/screenshots/campaign_comparison_view.svg
+```
 
-Use it to answer:
+This view answers:
 
-> What did campaign-like transactions look like, while avoiding causal overclaiming?
+> "Did campaign rows look different?"
+
+It also says the important part: this is not proof that the campaign caused the difference.
+
+## Fictional Example
+
+Imagine a fictional sales manager named Riya.
+
+Riya doesn't want to read five CSV files. She wants a quick answer before a weekly review meeting:
+
+> "Which categories should I ask the team about?"
+
+The dashboard helps her start that conversation. It doesn't replace deeper analysis, but it points her to the right places.

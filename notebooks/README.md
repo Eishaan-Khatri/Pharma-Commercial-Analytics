@@ -1,6 +1,12 @@
 # Notebook Guide
 
-These notebooks are lightweight entry points for reviewers who prefer notebook-based inspection. The main reproducible pipeline lives in `src/run_pipeline.py`.
+These notebooks are small entry points for people who like checking work in notebook form.
+
+The main pipeline is still:
+
+```powershell
+python -m src.run_pipeline --rows 25000 --force
+```
 
 Recommended order:
 
@@ -9,9 +15,4 @@ Recommended order:
 3. `03_segmentation.ipynb`
 4. `04_ab_style_analysis.ipynb`
 
-If a notebook does not show outputs on GitHub, run the full project first:
-
-```powershell
-python -m src.run_pipeline --rows 25000 --force
-```
-
+If GitHub does not show notebook outputs, run the pipeline first. The important proof files are also saved in `outputs/`, `reports/`, and `dashboards/screenshots/`.

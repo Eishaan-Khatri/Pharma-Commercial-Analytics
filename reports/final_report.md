@@ -1,36 +1,52 @@
 # Final Project Report
 
-This rebuilt project demonstrates a complete pharma commercial analytics workflow using synthetic public sample data.
+This is the short report for **Pharma Commercial Analytics**.
 
-## Workflow
+The project uses generated public data, so treat the results as proof of the build, not real business results.
 
-1. Generate transaction-style sample data.
-2. Clean and validate transaction fields.
-3. Aggregate SQL-style business metrics.
-4. Forecast month-category revenue.
-5. Segment drug categories using K-means.
-6. Compare campaign and non-campaign groups cautiously.
-7. Generate dashboard-style screenshots and reports.
+## What This Run Did
 
-## Main Outputs
+1. Made 25,000 pharma-style sales rows.
+2. Cleaned the rows and checked the fields.
+3. Built monthly category tables.
+4. Tested forecast models.
+5. Grouped categories with K-means.
+6. Compared campaign and non-campaign rows.
+7. Created charts, dashboard views, and CSV evidence files.
 
-- Data quality report: `outputs/tables/data_quality_report.csv`
-- Forecast metrics: `outputs/tables/forecast_model_metrics.csv`
-- Forecast split summary: `outputs/tables/forecast_split_summary.csv`
-- Segment profiles: `outputs/tables/segment_profiles.csv`
-- A/B-style analysis: `outputs/tables/ab_style_inference.csv`
-- Executive dashboard: `dashboards/screenshots/executive_dashboard.svg`
-- Dashboard views: `dashboards/screenshots/executive_summary.svg`, `category_view.svg`, `forecast_view.svg`, `segment_view.svg`, `campaign_comparison_view.svg`
-- Resume evidence metrics: `outputs/metrics/`
+## Main Numbers
 
-## Best Forecasting Model In Sample Run
+| Item | Value |
+|---|---:|
+| Rows | 25,000 |
+| Categories | 57 |
+| Regions | 5 |
+| Channels | 5 |
+| Monthly category rows | 1,354 |
+| Best forecast model | linear_regression |
+| Naive RMSE | 18,373.13 |
+| Best RMSE | 14,687.75 |
+| RMSE drop vs naive | 20.06% |
+| K-means segments | 4 |
+| 4-cluster silhouette | 0.4036 |
 
-linear_regression with RMSE 14,687.75.
+## Files To Check
 
-Naive baseline RMSE: 18,373.13.
+- `outputs/metrics/run_summary.csv`
+- `outputs/metrics/forecast_model_metrics.csv`
+- `outputs/metrics/forecast_split_summary.csv`
+- `outputs/tables/segment_profiles.csv`
+- `outputs/metrics/campaign_comparison_ci.csv`
+- `dashboards/screenshots/executive_dashboard.svg`
 
-Best-model improvement over naive: 20.06%.
+## Key Limit
 
-## Key Limitation
+The data is generated.
 
-The data in this public repository is synthetic. It shows analytics workflow quality, not real pharma business outcomes.
+So don't read this as:
+
+> "This improved real pharma revenue."
+
+Read it as:
+
+> "This shows I can build and explain a full commercial analytics project."

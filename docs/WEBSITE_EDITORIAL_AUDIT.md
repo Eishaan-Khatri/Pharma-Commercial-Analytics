@@ -1,61 +1,54 @@
-# Website Editorial Audit
+# Website Editing Notes
 
-This is the editing log for the GitHub Pages site.
+This file explains what changed on the GitHub Pages site and why.
 
-## Pass 1 - Source And Style Mismatch
+The goal was simple: make the project easy to check. A recruiter or reviewer should not have to dig through ten folders before they understand what happened.
 
-Problem found:
+## Pass 1 - The Page Needed A Clearer Shape
 
-- The HTML had moved to a stronger project-brief structure.
-- The CSS was still built for the older page, so many new sections were not properly styled.
-- The look was too close to the plain newspaper version.
-- The page needed a clear visual identity without falling back to the repeated cool-color style.
+What was wrong:
 
-Changes made:
+- The HTML had a stronger case-study layout.
+- The CSS still looked like the older version.
+- The page felt too flat.
+- The strongest proof was not visible fast enough.
 
-- Replaced the stylesheet.
-- Built a warmer field-report layout with ink, paper, teal, copper, moss, red, and ochre.
-- Removed unused old selectors.
-- Styled the new hero, run ledger, dashboard frame, build cards, output grid, tools list, limits band, and file links.
+What changed:
 
-## Pass 2 - Visual Rhythm And Evidence Density
+- Rebuilt the stylesheet around a warmer report-style page.
+- Added clear blocks for the run summary, dashboard, outputs, tools, limits, and proof files.
+- Kept the page as a project case study, not a shiny landing page.
 
-Problem found:
+## Pass 2 - The Proof Needed To Show Up Faster
 
-- The first fold was readable but too restrained.
-- The page still leaned too much on black rules and warm paper.
-- The strongest proof points were not visible fast enough.
+What was wrong:
 
-Changes made:
+- The top section was readable, but too quiet.
+- A reviewer still had to scroll before seeing real evidence.
 
-- Added a three-item evidence strip below the scope note:
-  - data work,
-  - modelling,
-  - business output.
-- Added color-coded labels and ledger rows.
-- Added a stronger left-side field marker to separate the page from the older flat version.
-- Kept the color palette varied without turning it into the repeated cool-color style.
+What changed:
 
-## Pass 3 - Editorial Tightening And Responsive Fixes
+- Added a small evidence strip near the top.
+- Put the main data size, model result, and dashboard proof closer to the first screen.
+- Used short labels instead of long claims.
 
-Problem found:
+## Pass 3 - The Text Needed To Sound Human
 
-- The headline was longer than it needed to be.
-- The run ledger created dead space on desktop.
-- A narrow headless preview exposed horizontal clipping risk around the hero area.
+What was wrong:
 
-Changes made:
+- Some copy sounded like a formal report.
+- Some lines used words that made the project feel over-packaged.
 
-- Rewrote the headline to be shorter and clearer:
-  - "I rebuilt this pharma analytics project so the work can be checked."
-- Tightened the lead copy.
-- Reduced hero padding and ledger stretch.
-- Added grid min-width guards so text and chart areas do not force horizontal overflow.
-- Fixed mobile navigation wrapping and narrow-width spacing.
-- Kept text in first person and simple vocabulary.
+What changed:
 
-## Final Editorial Rule
+- Rewrote the public copy in simpler language.
+- Kept the limits visible: generated data, no real pharma revenue claim, no causal campaign claim.
+- Kept the file links close to the claims, so the work can be checked.
 
-Every section should answer one question:
+## Final Rule
 
-> What did I do, what file proves it, and what am I not claiming?
+Every section should answer three questions:
+
+1. What did I build?
+2. Which file proves it?
+3. What am I not claiming?

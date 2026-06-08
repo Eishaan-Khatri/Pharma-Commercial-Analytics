@@ -1,53 +1,52 @@
 # Project Completion Checklist
 
-## Completed
+This repo is now usable as a public project. It has code, generated data, reports, dashboard images, and claim-control docs.
 
-- [x] Public-safe project README.
-- [x] Claim ledger separating confirmed evidence from rebuilt artifacts.
+## Done
+
+- [x] README that explains the project without overselling it.
+- [x] Claim ledger that separates safe resume claims from risky ones.
 - [x] Data dictionary.
-- [x] Methodology document.
-- [x] Limitations document.
-- [x] Learning guide with alternatives and rationale.
+- [x] Methodology note.
+- [x] Limitations note.
+- [x] Learning guide with choices and alternatives.
 - [x] Interview guide.
 - [x] SQL schema.
 - [x] SQL analysis queries.
-- [x] Synthetic data generator.
-- [x] Data cleaning module.
-- [x] Forecasting module.
-- [x] K-means segmentation module.
-- [x] A/B-style comparison module.
-- [x] SVG dashboard/figure generator.
+- [x] Generated sample data.
+- [x] Cleaning code.
+- [x] Forecasting code.
+- [x] K-means segmentation code.
+- [x] Campaign comparison code.
+- [x] SVG dashboard and chart generator.
 - [x] Full pipeline runner.
 - [x] Lightweight notebooks.
-- [x] Generated sample dataset.
-- [x] Generated clean dataset.
-- [x] Generated output tables.
-- [x] Generated reports.
-- [x] Generated dashboard screenshot.
-- [x] GitHub Pages-ready static website.
-- [x] Website CSS and JS assets.
-- [x] GitHub Pages deployment guide.
-- [x] `.nojekyll` marker for static asset serving.
+- [x] Cleaned output data.
+- [x] Metrics tables under `outputs/metrics/`.
+- [x] Written reports under `reports/`.
+- [x] Dashboard images under `dashboards/screenshots/`.
+- [x] GitHub Pages static site.
+- [x] `.nojekyll` marker for GitHub Pages.
 
-## Still Optional
+## Optional Later
 
 - [ ] Add a Streamlit app.
-- [ ] Add Tableau or Power BI exported dashboard PDF if available.
-- [ ] Add GitHub Actions smoke test.
-- [ ] Add anonymized real aggregate data if available.
-- [x] Add LightGBM and ridge-plus-LightGBM residual forecasting baselines.
-- [ ] Add ARIMA/SARIMA or Prophet-style model as an optional future classical time-series baseline.
-- [ ] Push this folder to the public GitHub repo.
-- [ ] Enable GitHub Pages from the repository root after pushing.
+- [ ] Add a Power BI or Tableau export if there is a real dashboard file.
+- [ ] Add a GitHub Actions smoke test.
+- [ ] Add anonymized real aggregate data if it can be shared safely.
+- [x] Add LightGBM and ridge-plus-LightGBM residual baselines.
+- [ ] Add SARIMA or Prophet as an optional time-series baseline.
+- [x] Push this folder to the public GitHub repo.
+- [x] Enable GitHub Pages from the repository root.
 
-## Shortlisting Standard
+## Shortlisting Use
 
-The project is now strong enough for:
+Use this project for:
 
 - data analyst roles,
 - data science roles,
 - business analytics roles,
 - consulting analytics roles,
-- industrial AI supporting evidence.
+- industrial AI supporting proof.
 
-For research-heavy NLP/CV roles, keep it secondary or omit it.
+For NLP, CV, or research-heavy roles, keep this project lower on the resume. It is useful, but it should not replace your stronger research work.

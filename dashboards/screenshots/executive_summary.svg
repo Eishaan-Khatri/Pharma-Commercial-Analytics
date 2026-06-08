@@ -14,9 +14,9 @@
     <rect x="855" y="62" width="250" height="86" fill="#F9FAFB" stroke="#D1D5DB" rx="8"/>
     <text x="873" y="91" font-family="Arial" font-size="12" fill="#6B7280">Best RMSE</text>
     <text x="873" y="125" font-family="Arial" font-size="26" font-weight="700" fill="#111827">14,687.75</text>
-    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">Executive summary</text>
-    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard is generated from synthetic public data and proves the analytics workflow, not real pharma revenue impact.</text>
-    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans transactions, builds monthly category features, forecasts demand, segments categories, and compares campaign rows cautiously.</text>
+    <text x="40" y="210" font-family="Arial" font-size="18" font-weight="700" fill="#111827">What this run shows</text>
+    <text x="40" y="246" font-family="Arial" font-size="14" fill="#374151">This dashboard uses generated public data. It checks the analytics build, not real pharma revenue.</text>
+    <text x="40" y="278" font-family="Arial" font-size="14" fill="#374151">The pipeline cleans sales rows, forecasts category sales, groups categories, and compares campaign-like rows carefully.</text>
     <text x="40" y="330" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Segment labels</text>
     
         <rect x="42" y="346" width="16" height="16" fill="#B45309" rx="3"/>
@@ -31,7 +31,7 @@
         <rect x="42" y="436" width="16" height="16" fill="#7C3AED" rx="3"/>
         <text x="70" y="449" font-family="Arial" font-size="13" fill="#374151">Low-volume niche: 6 categories, avg sales 19.5K</text>
         
-    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison boundary</text>
-    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: -166.92; 95% bootstrap CI [-227.41, -109.70]. Comparison only, not causal.</text>
+    <text x="40" y="560" font-family="Arial" font-size="15" font-weight="700" fill="#111827">Campaign comparison limit</text>
+    <text x="40" y="590" font-family="Arial" font-size="13" fill="#374151">Observed avg-sale difference: -166.92; 95% bootstrap CI [-227.41, -109.70]. This is not proof of lift.</text>
     
 </svg>
